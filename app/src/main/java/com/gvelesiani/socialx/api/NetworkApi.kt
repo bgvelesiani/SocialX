@@ -1,13 +1,15 @@
 package com.gvelesiani.socialx.api
 
 import android.os.Parcelable
+import com.gvelesiani.socialx.api.response.Error
 import com.gvelesiani.socialx.api.response.NetworkResponse
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface NetworkApi {
     @POST("auth/login")
@@ -26,12 +28,22 @@ interface NetworkApi {
     suspend fun signUp(@Body registerRequest: RegisterRequest): Response<LoginResponse>
 
     @GET("auth/me")
-    suspend fun getUserInfo(): NetworkResponse<UserInfoResponse,Error>
+    suspend fun getUserInfo(): NetworkResponse<UserInfoResponse, Error>
 
     @POST("post/{post_id}/like")
     suspend fun likeOrDislikePost(@Path("post_id") postId: Int): Response<Post>
+
+    @GET("post/{post_id}/comment")
+    suspend fun getCommentsByPost(@Path("post_id") postId: Int): Response<List<Comment>>
+
+    @POST("comment")
+    suspend fun addComment(@Body request: CommentRequest): Response<Comment>
 }
 
+data class CommentRequest(
+    val text: String,
+    val postId: Int
+)
 
 data class RegisterRequest(
     val name: String,
@@ -46,7 +58,7 @@ data class UserInfoResponse(
     val name: String = "",
     val email: String = "",
     val avatar: UserImage? = null
-): Parcelable
+) : Parcelable
 
 data class LoginRequest(
     val email: String = "",
@@ -61,8 +73,9 @@ data class LoginResponse(
 data class Success(
     val message: String
 )
+
 data class PostRe(
-    val postId: Int
+    val postId: Int?
 )
 
 data class PostRequest(
@@ -75,6 +88,7 @@ data class Post(
     val likes: Int = 0,
     val userLikes: List<Int> = listOf(),
     val user_Id: Int = 0,
+    val comments: Int = 0,
     val title: String = "",
     val description: String = "",
     val userName: String = "",
@@ -87,18 +101,29 @@ data class Story(
     val user_Id: Int = 0,
     val userImage: Image? = null,
     val userName: String = ""
-): Parcelable
+) : Parcelable
 
 @Parcelize
 data class Image(
     val path: String,
     val name: String,
     val url: String
-): Parcelable
+) : Parcelable
 
 @Parcelize
 data class UserImage(
     val path: String,
     val name: String,
     val url: String
-): Parcelable
+) : Parcelable
+
+@Parcelize
+data class Comment(
+    val id: Int,
+    val created_at: Long,
+    val text: String,
+    val post_id: Int,
+    val userAvatar: UserImage?,
+    val userName: String,
+    val user_id: Int
+) : Parcelable

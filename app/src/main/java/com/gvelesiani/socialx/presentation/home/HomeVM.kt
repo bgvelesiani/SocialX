@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gvelesiani.socialx.api.NetworkApi
 import com.gvelesiani.socialx.api.Post
-import com.gvelesiani.socialx.api.PostRe
 import com.gvelesiani.socialx.api.Story
 import com.gvelesiani.socialx.api.UserInfoResponse
 import com.gvelesiani.socialx.api.response.NetworkResponse
@@ -31,7 +30,7 @@ class HomeVM @Inject constructor(
         getUserId()
     }
 
-    private fun getUserId(){
+    private fun getUserId() {
         viewModelScope.launch {
             _userId.value = sharedPreferences.getInt("userId", 0)
         }
@@ -72,11 +71,11 @@ class HomeVM @Inject constructor(
         }
     }
 
-    fun getStories(){
+    fun getStories() {
         _uiState.value = HomeUiState.Loading
         viewModelScope.launch {
             val stories = apiService.getStories()
-            if(stories.isSuccessful){
+            if (stories.isSuccessful) {
                 stories.body()?.let {
                     _uiState.value = HomeUiState.StoriesSuccess(it)
                 }

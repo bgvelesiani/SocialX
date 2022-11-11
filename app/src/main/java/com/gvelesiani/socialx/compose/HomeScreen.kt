@@ -32,7 +32,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeVM = hiltViewModel()
                 ProgressIndicator(isDisplayed = false)
             }
 
-            is HomeUiState.UserInfoSuccess ->{}
+            is HomeUiState.UserInfoSuccess -> {}
             is HomeUiState.StoriesSuccess -> {}
         }
     }

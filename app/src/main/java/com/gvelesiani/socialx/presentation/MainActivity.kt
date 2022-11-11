@@ -1,7 +1,6 @@
 package com.gvelesiani.socialx.presentation
 
 import android.os.Bundle
-import android.text.TextUtils.replace
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
@@ -14,7 +13,6 @@ import com.gvelesiani.socialx.databinding.ActivityMainBinding
 import com.gvelesiani.socialx.presentation.home.HomeFragment
 import com.gvelesiani.socialx.presentation.login.LoginFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -33,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.token.collect {
-                    if(it == "empty") {
+                    if (it == "empty") {
                         supportFragmentManager.commit {
                             replace<LoginFragment>(R.id.container)
                         }

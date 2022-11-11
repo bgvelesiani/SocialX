@@ -26,7 +26,7 @@ class PostAdapter(
         notifyDataSetChanged()
     }
 
-    fun submitUserId(userId: Int){
+    fun submitUserId(userId: Int) {
         this.userId = userId
     }
 
@@ -58,20 +58,31 @@ class PostAdapter(
                 tvUserName.text = post.userName
                 tvCreatedAt.text = Date(post.created_at).toString()
                 tvPostDescription.text = post.description
-                tvLikes.text = post.likes.toString()
+                with(userInteractions) {
+                    tvLikes.text = post.likes.toString()
 
-                llLikes.setOnClickListener {
-                    like.invoke(post.id)
-                }
-
-                ivLike.setImageResource(if (post.userLikes.contains(userId)) R.drawable.ic_like else R.drawable.ic_not_liked)
-                tvLikes.setTextColor(
-                    if (post.userLikes.contains(userId)) {
-                        ContextCompat.getColor(binding.root.context, R.color.seed)
-                    } else {
-                        ContextCompat.getColor(binding.root.context, R.color.md_theme_dark_shadow)
+                    llLikes.setOnClickListener {
+                        like.invoke(post.id)
                     }
-                )
+
+                    ivLike.setImageResource(if (post.userLikes.contains(userId)) R.drawable.ic_like else R.drawable.ic_not_liked)
+                    tvLikes.setTextColor(
+                        if (post.userLikes.contains(userId)) {
+                            ContextCompat.getColor(binding.root.context, R.color.seed)
+                        } else {
+                            ContextCompat.getColor(
+                                binding.root.context,
+                                R.color.md_theme_dark_shadow
+                            )
+                        }
+                    )
+
+                    llComments.setOnClickListener {
+                        clickListener.invoke(post)
+                    }
+
+                    tvComments.text = post.comments.toString()
+                }
             }
         }
     }

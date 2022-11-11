@@ -26,7 +26,8 @@ class StoryPagerAdapter(private val context: Context, private var storyList: Arr
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val binding = FullStoryItemBinding.inflate(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
+        val binding =
+            FullStoryItemBinding.inflate(context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
 
         val story = binding.ivStory
         val userImage = binding.ivUserAvatar

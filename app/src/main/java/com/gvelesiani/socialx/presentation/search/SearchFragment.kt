@@ -1,8 +1,6 @@
 package com.gvelesiani.socialx.presentation.search
 
-import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.inputmethodservice.InputMethodService
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +14,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class SearchFragment: BaseFragment<FragmentSearchBinding>() {
+class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSearchBinding
         get() = FragmentSearchBinding::inflate
 
     override fun setupView(savedInstanceState: Bundle?) {
-        with(binding){
+        with(binding) {
             etSearch.requestFocusAndShowKeyboard()
 
         }

@@ -9,27 +9,24 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
-import com.gvelesiani.socialx.databinding.FragmentHomeBinding
 import com.gvelesiani.socialx.databinding.FragmentLoginBinding
 import com.gvelesiani.socialx.presentation.home.HomeFragment
-import com.gvelesiani.socialx.presentation.home.HomeUiState
-import com.gvelesiani.socialx.presentation.home.HomeVM
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginFragment: BaseFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private val viewModel: LoginVM by viewModels()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
-    get() = FragmentLoginBinding::inflate
+        get() = FragmentLoginBinding::inflate
 
     override fun setupView(savedInstanceState: Bundle?) {
         setOnClickListeners()
     }
 
     private fun setOnClickListeners() {
-        with(binding){
+        with(binding) {
             btLogin.setOnClickListener {
                 viewModel.loginUser(etEmail.text.toString(), etPassword.text.toString())
             }
@@ -37,7 +34,7 @@ class LoginFragment: BaseFragment<FragmentLoginBinding>() {
     }
 
     override fun setupObservers() {
-        with(viewModel){
+        with(viewModel) {
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
                     uiState.collect { uiState ->

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -18,6 +19,7 @@ import com.gvelesiani.socialx.api.UserInfoResponse
 import com.gvelesiani.socialx.databinding.FragmentHomeBinding
 import com.gvelesiani.socialx.presentation.adapters.PostAdapter
 import com.gvelesiani.socialx.presentation.adapters.StoriesAdapter
+import com.gvelesiani.socialx.presentation.comments.CommentsFragment
 import com.gvelesiani.socialx.presentation.createpost.CreatePostFragment
 import com.gvelesiani.socialx.presentation.search.SearchFragment
 import com.gvelesiani.socialx.presentation.story.StoryFragment
@@ -54,27 +56,47 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun setOnClickListeners() {
         with(binding) {
             btSearch.setOnClickListener {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.container, SearchFragment.newInstance())
-                    .addToBackStack(toString())
-                    .commit()
+                parentFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.slide_out,
+                        R.anim.slide_in,
+                        R.anim.slide_out
+                    )
+                        .add(R.id.container, SearchFragment.newInstance())
+                        .addToBackStack(toString())
+                }
             }
 
             binding.createPostBanner.root.setOnClickListener {
-                parentFragmentManager.beginTransaction()
-                    .replace(
-                        R.id.container,
-                        CreatePostFragment.newInstance(userInfo)
-                    ).addToBackStack(
-                        toString()
-                    ).commit()
+                parentFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.slide_from_bot,
+                        R.anim.slide_to_bot,
+                        R.anim.slide_from_bot,
+                        R.anim.slide_to_bot
+                    )
+                        .add(R.id.container, CreatePostFragment.newInstance(userInfo))
+                        .addToBackStack(toString())
+                }
             }
         }
     }
 
     private fun setupPostRecyclerView() {
         adapter = PostAdapter(
-            clickListener = {},
+            clickListener = {
+                parentFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.slide_from_bot,
+                        R.anim.slide_to_bot,
+                        R.anim.slide_from_bot,
+                        R.anim.slide_to_bot
+                    )
+                        .add(R.id.container, CommentsFragment.newInstance(it.id, userImage = userInfo.avatar?.url ?: ""))
+                        .addToBackStack(toString())
+                }
+            },
             like = {
                 viewModel.likeOrDislikePost(it)
             }
@@ -125,6 +147,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                                 Glide.with(binding.createPostBanner.ivUserAvatar)
                                     .load(state.userInfo.avatar?.url)
                                     .into(binding.createPostBanner.ivUserAvatar)
+                                userInfo = state.userInfo
                             }
 
                             is HomeUiState.StoriesSuccess -> {

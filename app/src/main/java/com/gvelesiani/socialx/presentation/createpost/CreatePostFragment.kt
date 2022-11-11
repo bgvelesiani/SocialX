@@ -43,8 +43,8 @@ class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
     }
 
     override fun setupObservers() {
-        viewModel.som.observe(viewLifecycleOwner){
-            if(it.equals("Created")){
+        viewModel.som.observe(viewLifecycleOwner) {
+            if (it.equals("Created")) {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.container, HomeFragment.newInstance()).commit()
             }
@@ -52,9 +52,10 @@ class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
     }
 
     companion object {
-        fun newInstance(userInfo: UserInfoResponse): CreatePostFragment = CreatePostFragment().applyBundle {
-            putParcelable("userInfo", userInfo)
-        }
+        fun newInstance(userInfo: UserInfoResponse): CreatePostFragment =
+            CreatePostFragment().applyBundle {
+                putParcelable("userInfo", userInfo)
+            }
     }
 }
 

@@ -42,6 +42,7 @@ class StoriesAdapter(
             0 -> {
                 (viewHolder as NewStoryViewHolder).bind(addNewStoryClickListener)
             }
+
             else -> {
                 val item = storyList[position - 1]
                 (viewHolder as StoryViewHolder).bind(

@@ -16,10 +16,10 @@ class CreatePostVM @Inject constructor(
 ) : ViewModel() {
     val something: MutableLiveData<String> = MutableLiveData()
     val som: LiveData<String> = something
-    fun createPost(postRequest: PostRequest){
+    fun createPost(postRequest: PostRequest) {
         viewModelScope.launch {
             val g = networkApi.createPost(postRequest)
-            if(g.isSuccessful){
+            if (g.isSuccessful) {
                 something.value = "Created"
             }
         }

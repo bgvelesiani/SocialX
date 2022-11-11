@@ -28,6 +28,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginVM = hiltViewModel
             is LoginUiState.Loading -> {
 //                ProgressIndicator(isDisplayed = true)
             }
+
             is LoginUiState.Success -> {
                 navController.navigate(Screen.Home.route)
             }
