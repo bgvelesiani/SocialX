@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.api.Story
+import com.gvelesiani.socialx.common.applyBundle
 import com.gvelesiani.socialx.databinding.FragmentStoryBinding
 import com.gvelesiani.socialx.presentation.adapters.StoryPagerAdapter
-import com.gvelesiani.socialx.presentation.createpost.applyBundle
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

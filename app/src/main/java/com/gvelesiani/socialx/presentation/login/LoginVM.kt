@@ -2,8 +2,9 @@ package com.gvelesiani.socialx.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gvelesiani.socialx.api.LoginRequest
-import com.gvelesiani.socialx.domain.useCase.LoginUserScenario
+import com.gvelesiani.socialx.domain.ResultFace
+import com.gvelesiani.socialx.domain.model.auth.LoginModel
+import com.gvelesiani.socialx.domain.useCase.scenarios.LoginUserScenario
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,17 +18,25 @@ class LoginVM @Inject constructor(private val loginUserScenario: LoginUserScenar
 
     fun loginUser(email: String, password: String) {
         _uiState.value = LoginUiState.Loading
+        val loginModel = LoginModel(email, password)
         viewModelScope.launch {
-            loginUserScenario.invoke(LoginRequest(email, password)) {
-                _uiState.value = LoginUiState.Success
+            when (val result = loginUserScenario.invoke(loginModel)) {
+                is ResultFace.Failure -> {
+                    _uiState.value = LoginUiState.Error(result.error.toString())
+                }
+
+                is ResultFace.Success -> {
+                    _uiState.value = LoginUiState.Success(result.value)
+                }
             }
         }
     }
-}
 
-sealed class LoginUiState {
-    object Success : LoginUiState()
-    object Empty : LoginUiState()
-    object Loading : LoginUiState()
-    data class Error(val errorMsg: String) : LoginUiState()
+    sealed class LoginUiState {
+        data class Success(val key: String) : LoginUiState()
+        object Empty : LoginUiState()
+        object Loading : LoginUiState()
+        data class Error(val errorMsg: String) : LoginUiState()
+    }
+
 }

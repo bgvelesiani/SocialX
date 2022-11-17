@@ -15,11 +15,11 @@ import com.bumptech.glide.Glide
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.api.Story
-import com.gvelesiani.socialx.api.UserInfoResponse
+import com.gvelesiani.socialx.common.IMAGES_MICRO_BASE_URL
 import com.gvelesiani.socialx.databinding.FragmentHomeBinding
+import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
 import com.gvelesiani.socialx.presentation.adapters.PostAdapter
 import com.gvelesiani.socialx.presentation.adapters.StoriesAdapter
-import com.gvelesiani.socialx.presentation.comments.CommentsFragment
 import com.gvelesiani.socialx.presentation.createpost.CreatePostFragment
 import com.gvelesiani.socialx.presentation.search.SearchFragment
 import com.gvelesiani.socialx.presentation.story.StoryFragment
@@ -31,7 +31,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val viewModel: HomeVM by activityViewModels()
     private lateinit var adapter: PostAdapter
     private lateinit var storyAdapter: StoriesAdapter
-    private var userInfo: UserInfoResponse = UserInfoResponse()
+    private var userInfo: UserInfoResponseModel = UserInfoResponseModel()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
         get() = FragmentHomeBinding::inflate
@@ -86,16 +86,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun setupPostRecyclerView() {
         adapter = PostAdapter(
             clickListener = {
-                parentFragmentManager.commit {
-                    setCustomAnimations(
-                        R.anim.slide_from_bot,
-                        R.anim.slide_to_bot,
-                        R.anim.slide_from_bot,
-                        R.anim.slide_to_bot
-                    )
-                        .add(R.id.container, CommentsFragment.newInstance(it.id, userImage = userInfo.avatar?.url ?: ""))
-                        .addToBackStack(toString())
-                }
+//                parentFragmentManager.commit {
+//                    setCustomAnimations(
+//                        R.anim.slide_from_bot,
+//                        R.anim.slide_to_bot,
+//                        R.anim.slide_from_bot,
+//                        R.anim.slide_to_bot
+//                    )
+//                        .add(R.id.container, CommentsFragment.newInstance(it.id, userImage = userInfo.avatar?.url ?: ""))
+//                        .addToBackStack(toString())
+//                }
             },
             like = {
                 viewModel.likeOrDislikePost(it)
@@ -123,13 +123,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         with(viewModel) {
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    userId.collect { id ->
-                        adapter.submitUserId(id)
-                    }
-                }
-            }
-            lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
                     uiState.collect { uiState ->
                         when (val state = uiState) {
                             is HomeUiState.Empty -> {}
@@ -145,13 +138,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
                             is HomeUiState.UserInfoSuccess -> {
                                 Glide.with(binding.createPostBanner.ivUserAvatar)
-                                    .load(state.userInfo.avatar?.url)
+                                    .load("${IMAGES_MICRO_BASE_URL}${state.userInfo.avatar}")
                                     .into(binding.createPostBanner.ivUserAvatar)
                                 userInfo = state.userInfo
+                                adapter.submitUserId(userKey = state.userInfo.key)
                             }
 
                             is HomeUiState.StoriesSuccess -> {
-                                storyAdapter.submitData(state.stories)
+//                                storyAdapter.submitData(state.stories)
                             }
                         }
                     }

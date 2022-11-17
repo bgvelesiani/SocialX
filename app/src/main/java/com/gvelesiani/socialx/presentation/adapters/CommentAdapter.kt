@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.api.Comment
-import com.gvelesiani.socialx.api.Post
 import com.gvelesiani.socialx.databinding.CommentItemBinding
+import com.gvelesiani.socialx.domain.model.posts.PostModel
 
 class CommentAdapter(
-    private val clickListener: (Post) -> Unit,
+    private val clickListener: (PostModel) -> Unit,
     private val like: (Int) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -46,7 +46,7 @@ class CommentAdapter(
             like: (Int) -> Unit
         ) {
             with(binding) {
-                Glide.with(binding.root).load(comment.userAvatar?.url)
+                Glide.with(binding.root).load(comment.userAvatar)
                     .placeholder(R.drawable.ic_launcher_background).into(ivUserAvatar)
                 tvUserName.text = comment.userName
                 tvComment.text = comment.text

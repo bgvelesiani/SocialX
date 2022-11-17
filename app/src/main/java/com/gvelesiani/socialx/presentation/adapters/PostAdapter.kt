@@ -7,27 +7,28 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gvelesiani.socialx.R
-import com.gvelesiani.socialx.api.Post
+import com.gvelesiani.socialx.common.IMAGES_MICRO_BASE_URL
 import com.gvelesiani.socialx.databinding.PostItemBinding
+import com.gvelesiani.socialx.domain.model.posts.PostModel
 import java.util.Date
 
 class PostAdapter(
-    private val clickListener: (Post) -> Unit,
-    private val like: (Int) -> Unit
+    private val clickListener: (PostModel) -> Unit,
+    private val like: (String) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var postList: List<Post> = arrayListOf()
+    private var postList: List<PostModel> = arrayListOf()
     var binding: PostItemBinding? = null
-    private var userId: Int = 0
+    private var userkey: String = ""
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitData(data: List<Post>) {
+    fun submitData(data: List<PostModel>) {
         postList = data
         notifyDataSetChanged()
     }
 
-    fun submitUserId(userId: Int) {
-        this.userId = userId
+    fun submitUserId(userKey: String) {
+        this.userkey = userKey
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -48,26 +49,26 @@ class PostAdapter(
     inner class PostViewHolder(private val binding: PostItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            post: Post,
-            clickListener: (Post) -> Unit,
-            like: (Int) -> Unit
+            post: PostModel,
+            clickListener: (PostModel) -> Unit,
+            like: (String) -> Unit
         ) {
             with(binding) {
-                Glide.with(binding.root).load(post.userImage?.url)
+                Glide.with(binding.root).load("$IMAGES_MICRO_BASE_URL/${post.image}")
                     .placeholder(R.drawable.ic_launcher_background).into(ivUserAvatar)
                 tvUserName.text = post.userName
-                tvCreatedAt.text = Date(post.created_at).toString()
+                tvCreatedAt.text = Date(post.createdAt).toString()
                 tvPostDescription.text = post.description
                 with(userInteractions) {
-                    tvLikes.text = post.likes.toString()
+                    tvLikes.text = post.likes.size.toString()
 
                     llLikes.setOnClickListener {
-                        like.invoke(post.id)
+                        like.invoke(post.key)
                     }
 
-                    ivLike.setImageResource(if (post.userLikes.contains(userId)) R.drawable.ic_like else R.drawable.ic_not_liked)
+                    ivLike.setImageResource(if (post.likes.contains(userkey)) R.drawable.ic_like else R.drawable.ic_not_liked)
                     tvLikes.setTextColor(
-                        if (post.userLikes.contains(userId)) {
+                        if (post.likes.contains(userkey)) {
                             ContextCompat.getColor(binding.root.context, R.color.seed)
                         } else {
                             ContextCompat.getColor(
@@ -81,7 +82,7 @@ class PostAdapter(
                         clickListener.invoke(post)
                     }
 
-                    tvComments.text = post.comments.toString()
+//                    tvComments.text = post.comments.size.toString()
                 }
             }
         }

@@ -1,18 +1,21 @@
 package com.gvelesiani.socialx.presentation.createpost
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
-import com.gvelesiani.socialx.api.PostRequest
-import com.gvelesiani.socialx.api.UserInfoResponse
+import com.gvelesiani.socialx.common.IMAGES_MICRO_BASE_URL
+import com.gvelesiani.socialx.common.applyBundle
 import com.gvelesiani.socialx.databinding.FragmentCreatePostBinding
+import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
+import com.gvelesiani.socialx.domain.model.posts.PostRequestModel
 import com.gvelesiani.socialx.presentation.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
@@ -21,10 +24,11 @@ class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCreatePostBinding
         get() = FragmentCreatePostBinding::inflate
 
+    @SuppressLint("IntentReset")
     override fun setupView(savedInstanceState: Bundle?) {
-        val userInfo = arguments?.getParcelable<UserInfoResponse>("userInfo")
+        val userInfo = arguments?.getParcelable<UserInfoResponseModel>("userInfo")
         userInfo?.let {
-            Glide.with(binding.ivUserAvatar).load(it.avatar?.url)
+            Glide.with(binding.ivUserAvatar).load("${IMAGES_MICRO_BASE_URL}${it.avatar}")
                 .placeholder(R.drawable.ic_launcher_background).into(binding.ivUserAvatar)
             binding.tvUserName.text = it.name
         }
@@ -35,7 +39,7 @@ class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
 
         binding.toolbar.btnCreatePost.setOnClickListener {
             viewModel.createPost(
-                PostRequest(
+                PostRequestModel(
                     binding.etPostDescription.text.toString()
                 )
             )
@@ -52,16 +56,9 @@ class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
     }
 
     companion object {
-        fun newInstance(userInfo: UserInfoResponse): CreatePostFragment =
+        fun newInstance(userInfo: UserInfoResponseModel): CreatePostFragment =
             CreatePostFragment().applyBundle {
                 putParcelable("userInfo", userInfo)
             }
     }
-}
-
-inline fun <T : Fragment> T.applyBundle(block: Bundle.() -> Unit): T {
-    val bundle = Bundle()
-    block(bundle)
-    this.arguments = bundle
-    return this
 }

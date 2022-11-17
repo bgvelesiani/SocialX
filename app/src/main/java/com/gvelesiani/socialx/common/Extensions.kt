@@ -1,11 +1,13 @@
 package com.gvelesiani.socialx.common
 
 import android.content.Context
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.fragment.app.Fragment
 
 fun EditText.onTextChanged(onTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
@@ -19,4 +21,11 @@ fun EditText.onTextChanged(onTextChanged: (String) -> Unit) {
         override fun afterTextChanged(editable: Editable?) {
         }
     })
+}
+
+inline fun <T : Fragment> T.applyBundle(block: Bundle.() -> Unit): T {
+    val bundle = Bundle()
+    block(bundle)
+    this.arguments = bundle
+    return this
 }

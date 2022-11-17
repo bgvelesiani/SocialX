@@ -1,7 +1,8 @@
 package com.gvelesiani.socialx.hiltModules
 
-import com.gvelesiani.socialx.api.NetworkApi
-import com.gvelesiani.socialx.api.response.NetworkResponseAdapterFactory
+import com.gvelesiani.socialx.api.AuthorizationApi
+import com.gvelesiani.socialx.api.ImagesApi
+import com.gvelesiani.socialx.api.PostsApi
 import com.gvelesiani.socialx.domain.repositories.AuthTokenRepository
 import com.gvelesiani.socialx.interceptors.AuthInterceptor
 import dagger.Module
@@ -20,8 +21,7 @@ object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("https://x8ki-letl-twmt.n7.xano.io/api:socialx/")
-            .addCallAdapterFactory(NetworkResponseAdapterFactory())
+            .baseUrl("https://zpv1sz.deta.dev/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
     }
@@ -46,5 +46,12 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideNetworkApi(retrofit: Retrofit): NetworkApi = retrofit.create(NetworkApi::class.java)
+    fun provideAuthApi(retrofit: Retrofit): AuthorizationApi =
+        retrofit.create(AuthorizationApi::class.java)
+
+    @Provides
+    fun provideImageApi(retrofit: Retrofit): ImagesApi = retrofit.create(ImagesApi::class.java)
+
+    @Provides
+    fun providePostApi(retrofit: Retrofit): PostsApi = retrofit.create(PostsApi::class.java)
 }

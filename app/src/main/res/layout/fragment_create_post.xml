@@ -43,8 +43,6 @@
             tools:text="Bacho Gvelesiani" />
 
         <EditText
-            android:layout_marginTop="8dp"
-            android:background="@android:color/transparent"
             android:id="@+id/etPostDescription"
             android:layout_width="match_parent"
             android:layout_height="0dp"

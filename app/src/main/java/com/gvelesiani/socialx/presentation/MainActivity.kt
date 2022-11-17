@@ -12,6 +12,7 @@ import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.databinding.ActivityMainBinding
 import com.gvelesiani.socialx.presentation.home.HomeFragment
 import com.gvelesiani.socialx.presentation.login.LoginFragment
+import com.gvelesiani.socialx.presentation.register.RegisterFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.token.collect {
                     if (it == "empty") {
                         supportFragmentManager.commit {
-                            replace<LoginFragment>(R.id.container)
+                            replace<RegisterFragment>(R.id.container)
                         }
                     } else {
                         supportFragmentManager.commit {
