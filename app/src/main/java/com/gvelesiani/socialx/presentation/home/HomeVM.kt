@@ -3,7 +3,7 @@ package com.gvelesiani.socialx.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gvelesiani.socialx.api.Story
-import com.gvelesiani.socialx.domain.ResultFace
+import com.gvelesiani.socialx.domain.ResultModel
 import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
 import com.gvelesiani.socialx.domain.model.posts.PostModel
 import com.gvelesiani.socialx.domain.useCase.posts.GetPostsUseCase
@@ -29,8 +29,8 @@ class HomeVM @Inject constructor(
         _uiState.value = HomeUiState.Loading
         viewModelScope.launch {
             when (val result = getUserInfoUseCase.invoke()) {
-                is ResultFace.Failure -> {}
-                is ResultFace.Success -> {
+                is ResultModel.Failure -> {}
+                is ResultModel.Success -> {
                     _uiState.value = HomeUiState.UserInfoSuccess(result.value)
                 }
             }
@@ -40,11 +40,11 @@ class HomeVM @Inject constructor(
     fun likeOrDislikePost(postKey: String) {
         viewModelScope.launch {
             when (val result = likeOrDislikePostUseCase.invoke(postKey)) {
-                is ResultFace.Failure -> {
+                is ResultModel.Failure -> {
                     _uiState.value = HomeUiState.Error(result.error.toString())
                 }
 
-                is ResultFace.Success -> {
+                is ResultModel.Success -> {
                     getPosts()
                 }
             }
@@ -54,11 +54,11 @@ class HomeVM @Inject constructor(
     fun getPosts() {
         viewModelScope.launch {
             when (val result = getPostsUseCase.invoke()) {
-                is ResultFace.Failure -> {
+                is ResultModel.Failure -> {
                     _uiState.value = HomeUiState.Error(result.error.toString())
                 }
 
-                is ResultFace.Success -> {
+                is ResultModel.Success -> {
                     _uiState.value = HomeUiState.PostSuccess(result.value.sortedByDescending {
                         Date(it.createdAt)
                     })

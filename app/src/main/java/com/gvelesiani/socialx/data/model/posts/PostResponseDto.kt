@@ -18,5 +18,7 @@ data class PostResponseDto(
     @SerializedName("user_name")
     val userName: String = "",
     @SerializedName("image")
-    val image: String = ""
+    val image: String = "",
+    @SerializedName("user_image")
+    val userImage: String = ""
 )

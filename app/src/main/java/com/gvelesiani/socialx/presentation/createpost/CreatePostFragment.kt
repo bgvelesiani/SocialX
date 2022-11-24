@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
@@ -15,11 +19,14 @@ import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
 import com.gvelesiani.socialx.domain.model.posts.PostRequestModel
 import com.gvelesiani.socialx.presentation.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import java.io.File
 
 
 @AndroidEntryPoint
 class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
     private val viewModel: CreatePostVM by viewModels()
+    private var postImage: File? = null
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCreatePostBinding
         get() = FragmentCreatePostBinding::inflate
@@ -41,16 +48,43 @@ class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
             viewModel.createPost(
                 PostRequestModel(
                     binding.etPostDescription.text.toString()
-                )
+                ),
+                postImage
             )
+        }
+
+        binding.btNewPhoto.root.setOnClickListener {
+            pickImagesLauncher.launch("image/*")
         }
     }
 
+    private val pickImagesLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                binding.ivPhotoToUpload.setImageURI(it)
+                val uriPathHelper = viewModel.getURIPathHelper()
+                val filePath = uriPathHelper.getPath(requireContext(), it)
+                val file = File(filePath)
+                postImage = file
+            }
+        }
+
     override fun setupObservers() {
-        viewModel.som.observe(viewLifecycleOwner) {
-            if (it.equals("Created")) {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.container, HomeFragment.newInstance()).commit()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    when (it) {
+                        is CreatePostVM.CreatePostUiState.Empty -> {}
+                        is CreatePostVM.CreatePostUiState.Error -> {}
+                        is CreatePostVM.CreatePostUiState.Loading -> {
+
+                        }
+                        is CreatePostVM.CreatePostUiState.Success -> {
+                            parentFragmentManager.beginTransaction()
+                                .replace(R.id.container, HomeFragment.newInstance()).commit()
+                        }
+                    }
+                }
             }
         }
     }

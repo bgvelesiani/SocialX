@@ -2,7 +2,7 @@ package com.gvelesiani.socialx.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gvelesiani.socialx.domain.ResultFace
+import com.gvelesiani.socialx.domain.ResultModel
 import com.gvelesiani.socialx.domain.model.auth.LoginModel
 import com.gvelesiani.socialx.domain.useCase.scenarios.LoginUserScenario
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,11 +21,11 @@ class LoginVM @Inject constructor(private val loginUserScenario: LoginUserScenar
         val loginModel = LoginModel(email, password)
         viewModelScope.launch {
             when (val result = loginUserScenario.invoke(loginModel)) {
-                is ResultFace.Failure -> {
+                is ResultModel.Failure -> {
                     _uiState.value = LoginUiState.Error(result.error.toString())
                 }
 
-                is ResultFace.Success -> {
+                is ResultModel.Success -> {
                     _uiState.value = LoginUiState.Success(result.value)
                 }
             }
@@ -38,5 +38,4 @@ class LoginVM @Inject constructor(private val loginUserScenario: LoginUserScenar
         object Loading : LoginUiState()
         data class Error(val errorMsg: String) : LoginUiState()
     }
-
 }

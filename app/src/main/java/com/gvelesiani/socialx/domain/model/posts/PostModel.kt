@@ -8,5 +8,6 @@ data class PostModel(
     val comments: List<String> = listOf(),
     val description: String = "",
     val userName: String = "",
-    val image: String = ""
+    val image: String = "",
+    val userImage: String = ""
 )

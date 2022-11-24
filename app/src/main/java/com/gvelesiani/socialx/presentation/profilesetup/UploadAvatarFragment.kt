@@ -18,7 +18,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.common.applyBundle
-import com.gvelesiani.socialx.databinding.FragmentProfileSetupBinding
+import com.gvelesiani.socialx.databinding.FragmentUploadAvatarBinding
 import com.gvelesiani.socialx.presentation.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,14 +29,14 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 @AndroidEntryPoint
-class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
+class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>() {
     private var userKey: String? = ""
-    private val viewModel: ProfileSetupVM by viewModels()
+    private val viewModel: UploadAvatarVM by viewModels()
     private var image: MultipartBody.Part? = null
     private var selectedImageUri: Uri? = null
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProfileSetupBinding
-        get() = FragmentProfileSetupBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentUploadAvatarBinding
+        get() = FragmentUploadAvatarBinding::inflate
 
     override fun setupView(savedInstanceState: Bundle?) {
         userKey = arguments?.getString("userKey")
@@ -97,7 +97,7 @@ class ProfileSetupFragment : BaseFragment<FragmentProfileSetupBinding>() {
             Manifest.permission.CAMERA
         )
 
-        fun newInstance(userKey: String): ProfileSetupFragment = ProfileSetupFragment().applyBundle {
+        fun newInstance(userKey: String): UploadAvatarFragment = UploadAvatarFragment().applyBundle {
             putString("userKey", userKey)
         }
     }

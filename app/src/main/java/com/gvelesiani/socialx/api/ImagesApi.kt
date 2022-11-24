@@ -1,6 +1,7 @@
 package com.gvelesiani.socialx.api
 
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Headers
@@ -16,13 +17,5 @@ interface ImagesApi {
     @POST("upload_avatar")
     suspend fun uploadAvatar(
         @Part file: MultipartBody.Part,
-    ): Response<ResponseBody>
-
-
-    @Multipart
-    @POST("upload_post_image")
-    suspend fun uploadPostImage(
-        @Part file: MultipartBody.Part,
-        @Part key: MultipartBody.Part
     ): Response<ResponseBody>
 }

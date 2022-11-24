@@ -2,6 +2,7 @@ package com.gvelesiani.socialx.presentation.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -54,8 +55,13 @@ class PostAdapter(
             like: (String) -> Unit
         ) {
             with(binding) {
-                Glide.with(binding.root).load("$IMAGES_MICRO_BASE_URL/${post.image}")
+                cvPostImage.visibility = if (post.image != "") View.VISIBLE else View.GONE
+
+                Glide.with(root).load("$IMAGES_MICRO_BASE_URL${post.userImage}")
                     .placeholder(R.drawable.ic_launcher_background).into(ivUserAvatar)
+
+                Glide.with(root).load("$IMAGES_MICRO_BASE_URL${post.image}").into(ivPostImage)
+
                 tvUserName.text = post.userName
                 tvCreatedAt.text = Date(post.createdAt).toString()
                 tvPostDescription.text = post.description
@@ -69,7 +75,7 @@ class PostAdapter(
                     ivLike.setImageResource(if (post.likes.contains(userkey)) R.drawable.ic_like else R.drawable.ic_not_liked)
                     tvLikes.setTextColor(
                         if (post.likes.contains(userkey)) {
-                            ContextCompat.getColor(binding.root.context, R.color.seed)
+                            ContextCompat.getColor(root.context, R.color.seed)
                         } else {
                             ContextCompat.getColor(
                                 binding.root.context,

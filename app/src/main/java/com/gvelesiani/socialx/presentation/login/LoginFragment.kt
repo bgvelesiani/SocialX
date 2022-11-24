@@ -10,8 +10,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.databinding.FragmentLoginBinding
+import com.gvelesiani.socialx.presentation.home.HomeFragment
 import com.gvelesiani.socialx.presentation.login.LoginVM.LoginUiState
-import com.gvelesiani.socialx.presentation.profilesetup.ProfileSetupFragment
+import com.gvelesiani.socialx.presentation.profilesetup.UploadAvatarFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -47,7 +48,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                                 parentFragmentManager.beginTransaction()
                                     .replace(
                                         R.id.container,
-                                        ProfileSetupFragment.newInstance(state.key)
+                                        HomeFragment.newInstance()
                                     )
                                     .commit()
                             }

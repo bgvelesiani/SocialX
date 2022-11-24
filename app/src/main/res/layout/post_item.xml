@@ -47,6 +47,26 @@
             app:layout_constraintStart_toStartOf="@+id/tvUserName"
             app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
+        <androidx.cardview.widget.CardView
+            app:cardElevation="0dp"
+            android:id="@+id/cvPostImage"
+            app:cardCornerRadius="20dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCreatedAt"
+            android:layout_width="0dp"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                android:id="@+id/ivPostImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:id="@+id/tvPostDescription"
             android:layout_width="0dp"
@@ -58,7 +78,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivUserAvatar" />
+            app:layout_constraintTop_toBottomOf="@+id/cvPostImage" />
 
         <include
             android:layout_marginTop="32dp"

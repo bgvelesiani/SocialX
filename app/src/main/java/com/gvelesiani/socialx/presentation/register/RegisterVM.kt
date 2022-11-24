@@ -2,9 +2,9 @@ package com.gvelesiani.socialx.presentation.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gvelesiani.socialx.domain.ResultFace
+import com.gvelesiani.socialx.domain.ResultModel
 import com.gvelesiani.socialx.domain.model.auth.RegisterModel
-import com.gvelesiani.socialx.domain.useCase.auth.RegisterUserUseCase
+import com.gvelesiani.socialx.domain.useCase.scenarios.RegisterUserScenario
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,19 +13,38 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterVM @Inject constructor(
-    private val registerUserUseCase: RegisterUserUseCase
+    private val registerUser: RegisterUserScenario
 ) : ViewModel() {
-    private val _registerSuccess: MutableStateFlow<String> = MutableStateFlow("")
-    val registerSuccess: StateFlow<String> = _registerSuccess
+    private val _uiState: MutableStateFlow<RegisterUiState> =
+        MutableStateFlow(RegisterUiState.Empty)
+    val uiState: StateFlow<RegisterUiState> = _uiState
 
     fun registerUser(email: String, password: String, userName: String) {
+        _uiState.value = RegisterUiState.Loading
         viewModelScope.launch {
-            when(val result = registerUserUseCase.invoke(RegisterModel(email = email, password = password, name = userName))){
-                is ResultFace.Failure -> {}
-                is ResultFace.Success -> {
-                    _registerSuccess.value = "REGISTERED"
+            when (val result = registerUser.invoke(
+                RegisterModel(
+                    email = email,
+                    password = password,
+                    name = userName
+                )
+            )) {
+                is ResultModel.Failure -> {
+                    _uiState.value = RegisterUiState.Error(result.ex?.message!!)
+                }
+
+                is ResultModel.Success -> {
+                    _uiState.value =
+                        RegisterUiState.Success(result.value.token, result.value.userKey)
                 }
             }
         }
+    }
+
+    sealed class RegisterUiState {
+        data class Success(val token: String, val userKey: String) : RegisterUiState()
+        object Empty : RegisterUiState()
+        object Loading : RegisterUiState()
+        data class Error(val errorMsg: String) : RegisterUiState()
     }
 }

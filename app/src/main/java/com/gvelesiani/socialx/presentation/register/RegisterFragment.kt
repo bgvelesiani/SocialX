@@ -13,6 +13,7 @@ import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.databinding.FragmentRegisterBinding
 import com.gvelesiani.socialx.presentation.login.LoginFragment
+import com.gvelesiani.socialx.presentation.profilesetup.UploadAvatarFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -38,10 +39,18 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     override fun setupObservers() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.registerSuccess.collect {
-                    if (it == "REGISTERED") {
-                        parentFragmentManager.commit {
-                            replace<LoginFragment>(R.id.container)
+                viewModel.uiState.collect {
+                    when (it) {
+                        is RegisterVM.RegisterUiState.Empty -> {}
+                        is RegisterVM.RegisterUiState.Error -> {}
+                        is RegisterVM.RegisterUiState.Loading -> {}
+                        is RegisterVM.RegisterUiState.Success -> {
+                            parentFragmentManager.beginTransaction()
+                                .replace(
+                                    R.id.container,
+                                    UploadAvatarFragment.newInstance(it.userKey)
+                                )
+                                .commit()
                         }
                     }
                 }

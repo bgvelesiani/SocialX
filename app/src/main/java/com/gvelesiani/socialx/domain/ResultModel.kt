@@ -2,12 +2,12 @@ package com.gvelesiani.socialx.domain
 
 import java.io.Serializable
 
-sealed class ResultFace<out T : Any, out E : Any> : Serializable {
+sealed class ResultModel<out T : Any, out E : Any> : Serializable {
     data class Success<out T : Any>(val value: T) :
-        ResultFace<T, Nothing>()
+        ResultModel<T, Nothing>()
 
     data class Failure<out E : Any>(
         val error: E? = null,
         val ex: Throwable? = null
-    ) : ResultFace<Nothing, E>()
+    ) : ResultModel<Nothing, E>()
 }

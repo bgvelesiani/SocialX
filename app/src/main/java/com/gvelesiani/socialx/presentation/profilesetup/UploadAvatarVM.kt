@@ -2,7 +2,7 @@ package com.gvelesiani.socialx.presentation.profilesetup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gvelesiani.socialx.domain.ResultFace
+import com.gvelesiani.socialx.domain.ResultModel
 import com.gvelesiani.socialx.domain.helpers.uriPath.URIPathHelper
 import com.gvelesiani.socialx.domain.model.images.AvatarModel
 import com.gvelesiani.socialx.domain.useCase.images.UploadUserAvatarUseCase
@@ -14,7 +14,7 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileSetupVM @Inject constructor(
+class UploadAvatarVM @Inject constructor(
     private val uriPathHelper: URIPathHelper,
     private val uploadUserAvatarUseCase: UploadUserAvatarUseCase
 ) : ViewModel() {
@@ -26,11 +26,10 @@ class ProfileSetupVM @Inject constructor(
     fun uploadUserAvatar(userAvatar: MultipartBody.Part) {
         viewModelScope.launch {
             when (val result = uploadUserAvatarUseCase.invoke(AvatarModel(userAvatar))) {
-                is ResultFace.Failure -> {
+                is ResultModel.Failure -> {
 
                 }
-
-                is ResultFace.Success -> {
+                is ResultModel.Success -> {
                     _success.value = "SUCCESS"
                 }
             }

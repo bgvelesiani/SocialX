@@ -1,8 +1,10 @@
 package com.gvelesiani.socialx.data.model.posts
 
-import com.google.gson.annotations.SerializedName
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 
 data class PostRequestDto(
-    @SerializedName("description")
-    val description: String = ""
+    val image: MultipartBody.Part,
+    val description: RequestBody
 )

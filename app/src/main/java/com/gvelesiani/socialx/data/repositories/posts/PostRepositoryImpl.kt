@@ -6,13 +6,14 @@ import com.gvelesiani.socialx.api.response.handleApi
 import com.gvelesiani.socialx.data.model.posts.PostRequestDto
 import com.gvelesiani.socialx.data.model.posts.PostResponseDto
 import com.gvelesiani.socialx.domain.repositories.PostRepository
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class PostRepositoryImpl @Inject constructor(private val api: PostsApi) : PostRepository {
     override suspend fun getPosts(): ApiResult<List<PostResponseDto>> = handleApi { api.getPosts() }
 
-    override suspend fun createPost(post: PostRequestDto): ApiResult<PostResponseDto> =
-        handleApi { api.createPost(post) }
+    override suspend fun createPost(post: PostRequestDto): ApiResult<ResponseBody> =
+        handleApi { api.createPost(post.image, post.description) }
 
     override suspend fun likeOrDislikePost(postKey: String): ApiResult<PostResponseDto> =
         handleApi { api.likeOrDislikePost(postKey) }

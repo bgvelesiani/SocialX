@@ -6,6 +6,7 @@ import com.gvelesiani.socialx.api.response.handleApi
 import com.gvelesiani.socialx.data.model.auth.LoginRequestDto
 import com.gvelesiani.socialx.data.model.auth.LoginResponseDto
 import com.gvelesiani.socialx.data.model.auth.RegisterRequestDto
+import com.gvelesiani.socialx.data.model.auth.RegisterResponseDto
 import com.gvelesiani.socialx.data.model.auth.UserInfoResponseDto
 import com.gvelesiani.socialx.domain.repositories.AuthRepository
 import javax.inject.Inject
@@ -16,7 +17,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun login(loginRequest: LoginRequestDto): ApiResult<LoginResponseDto> =
         handleApi { apiService.login(loginRequest) }
 
-    override suspend fun register(registerRequest: RegisterRequestDto): ApiResult<UserInfoResponseDto> =
+    override suspend fun register(registerRequest: RegisterRequestDto): ApiResult<RegisterResponseDto> =
         handleApi { apiService.register(registerRequest) }
 
     override suspend fun getUserInfo(): ApiResult<UserInfoResponseDto> =
