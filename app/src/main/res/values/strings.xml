@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SocialX</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
+    <string name="bt_upload_text">Upload</string>
+    <string name="choose_avatar_description">Choose one of the default avatars or upload your own 😊</string>
 </resources>

@@ -83,7 +83,7 @@ class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>() {
                 rvAdapter.submitUserKey(userKey)
                 adapter = rvAdapter
                 layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, true)
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             }
         }
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_margin="16dp"
     android:layout_height="match_parent">
@@ -11,39 +12,30 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/regular"
         android:gravity="center"
-        android:text="Choose one of the default avatars or upload your own 😊"
+        android:text="@string/choose_avatar_description"
         android:textColor="#000"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:layout_marginTop="32dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginTop="64dp"
         android:id="@+id/ivAvatar"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/avatar_1"
+        android:src="@drawable/avatar_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="48dp"
         android:id="@+id/rvAvatars"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivAvatar" />
-
-    <Button
-        android:textSize="16sp"
-        android:layout_marginBottom="32dp"
-        android:id="@+id/btUploadPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Upload"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:textSize="18sp"
@@ -54,7 +46,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:text="Choose from gallery"
+        android:text="@string/choose_from_gallery"
         app:layout_constraintBottom_toTopOf="@+id/btUploadPhoto" />
+
+    <Button
+        android:id="@+id/btUploadPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bt_upload_text"
+        android:layout_marginBottom="16dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/btSkip"/>
+
+    <TextView
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:fontFamily="@font/medium"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:id="@+id/btSkip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Skip"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
