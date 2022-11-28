@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 
+@Suppress("DEPRECATION") // TODO: Remove this because getParcelable is deprecated
 @AndroidEntryPoint
 class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
     private val viewModel: CreatePostVM by viewModels()

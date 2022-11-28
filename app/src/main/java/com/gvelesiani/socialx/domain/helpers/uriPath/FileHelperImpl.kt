@@ -2,14 +2,19 @@ package com.gvelesiani.socialx.domain.helpers.uriPath
 
 import android.content.ContentUris
 import android.content.Context
+import android.content.ContextWrapper
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 import javax.inject.Inject
 
-class URIPathHelperImpl @Inject constructor() : URIPathHelper {
+class FileHelperImpl @Inject constructor() : FileHelper {
     override fun getPath(context: Context, uri: Uri): String? {
         if (DocumentsContract.isDocumentUri(context, uri)) {
             if (isExternalStorageDocument(uri)) {
@@ -83,5 +88,16 @@ class URIPathHelperImpl @Inject constructor() : URIPathHelper {
 
     private fun isMediaDocument(uri: Uri): Boolean {
         return "com.android.providers.media.documents" == uri.authority
+    }
+
+    override fun getFileFromBitmap(bitmap: Bitmap?, context: Context): File {
+        val wrapper = ContextWrapper(context)
+        var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
+        file = File(file, "test.jpg")
+        val stream: OutputStream = FileOutputStream(file)
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 25, stream)
+        stream.flush()
+        stream.close()
+        return file
     }
 }

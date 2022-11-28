@@ -3,7 +3,7 @@ package com.gvelesiani.socialx.presentation.profilesetup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gvelesiani.socialx.domain.ResultModel
-import com.gvelesiani.socialx.domain.helpers.uriPath.URIPathHelper
+import com.gvelesiani.socialx.domain.helpers.uriPath.FileHelper
 import com.gvelesiani.socialx.domain.model.images.AvatarModel
 import com.gvelesiani.socialx.domain.useCase.images.UploadUserAvatarUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,13 +15,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UploadAvatarVM @Inject constructor(
-    private val uriPathHelper: URIPathHelper,
+    private val uriPathHelper: FileHelper,
     private val uploadUserAvatarUseCase: UploadUserAvatarUseCase
 ) : ViewModel() {
     private val _success: MutableStateFlow<String> = MutableStateFlow("")
     val success: StateFlow<String> = _success
 
-    fun getURIPathHelper(): URIPathHelper = uriPathHelper
+    fun getURIPathHelper(): FileHelper = uriPathHelper
 
     fun uploadUserAvatar(userAvatar: MultipartBody.Part) {
         viewModelScope.launch {

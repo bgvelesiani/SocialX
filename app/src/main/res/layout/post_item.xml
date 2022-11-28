@@ -4,21 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="4dp"
-    app:cardElevation="0dp"
     android:layout_marginBottom="4dp"
     android:padding="8dp"
     app:cardBackgroundColor="#fff"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp">
+        android:layout_marginBottom="16dp"
+        android:layout_height="match_parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivUserAvatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +30,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/medium"
-            android:text="Test user"
             android:textColor="#000"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +41,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/light"
-            android:text="1/1/1"
             android:textColor="#9597A1"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,22 +48,22 @@
             app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
         <androidx.cardview.widget.CardView
-            app:cardElevation="0dp"
             android:id="@+id/cvPostImage"
-            app:cardCornerRadius="20dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvCreatedAt"
             android:layout_width="0dp"
-            android:layout_height="200dp">
+            android:layout_height="250dp"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCreatedAt">
 
             <ImageView
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher"
                 android:id="@+id/ivPostImage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -71,9 +71,10 @@
             android:id="@+id/tvPostDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/regular"
-            android:text="ajslkdfhasdlkfasdilfasbdlfjaksdhfbasld,fabsydlfaisudfbnalsdfuansdlfiuasdnflasdiufnasldkfuasndlfkasudfnlasdifau"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/light"
             android:textColor="#000"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,12 +82,14 @@
             app:layout_constraintTop_toBottomOf="@+id/cvPostImage" />
 
         <include
-            android:layout_marginTop="32dp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/tvPostDescription"
             android:id="@+id/userInteractions"
-            layout="@layout/user_interactions_layout"/>
+            layout="@layout/user_interactions_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvPostDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

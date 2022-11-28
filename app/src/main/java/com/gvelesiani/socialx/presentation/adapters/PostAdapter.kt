@@ -88,7 +88,7 @@ class PostAdapter(
                         clickListener.invoke(post)
                     }
 
-//                    tvComments.text = post.comments.size.toString()
+                    tvComments.text = post.comments.size.toString()
                 }
             }
         }

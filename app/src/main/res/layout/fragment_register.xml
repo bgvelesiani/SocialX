@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/medium"
         android:text="Getting Started"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,55 +27,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvGetStarted" />
 
-    <TextView
+    <com.gvelesiani.socialx.customview.InputView
         android:layout_marginTop="16dp"
-        android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
+        android:id="@+id/ivFirstName"
+        android:layout_marginEnd="8dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Email"
+        app:layout_constraintEnd_toStartOf="@+id/ivLastName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCreateAnAccount" />
+        app:layout_constraintTop_toBottomOf="@id/tvCreateAnAccount"
+        app:setHint="First name"
+        app:setImage="@drawable/user"
+        app:setTitle="First Name" />
 
-    <EditText
-        android:id="@+id/etEmail"
+    <com.gvelesiani.socialx.customview.InputView
+        android:id="@+id/ivLastName"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/ivFirstName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivFirstName"
+        app:setHint="Last name"
+        app:setImage="@drawable/user"
+        app:setTitle="Last Name" />
+
+    <com.gvelesiani.socialx.customview.InputView
+        android:id="@+id/ivEmail"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/ivLastName"
+        app:setHint="Email address"
+        app:setImage="@drawable/mail"
+        app:setTitle="Email Address" />
 
-    <TextView
+    <com.gvelesiani.socialx.customview.InputView
         android:layout_marginTop="16dp"
-        android:id="@+id/tvUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etEmail" />
-
-    <EditText
-        android:id="@+id/etUserName"
+        android:id="@+id/ivPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvUserName" />
-
-    <TextView
-        android:layout_marginTop="16dp"
-        android:id="@+id/tvPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUserName" />
-
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/ivEmail"
+        app:setHint="Password"
+        app:isPasswordInput="true"
+        app:setImage="@drawable/lock"
+        app:setTitle="Password" />
 
     <Button
+        android:layout_marginTop="16dp"
         android:id="@+id/btRegister"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="Register"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPassword" />
 </androidx.constraintlayout.widget.ConstraintLayout>
