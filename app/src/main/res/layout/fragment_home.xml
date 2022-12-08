@@ -100,4 +100,16 @@
                     app:layout_constraintTop_toBottomOf="@id/createPostBanner" />
             </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <me.ibrahimsn.lib.SmoothBottomBar
+        app:cornerRadius="32dp"
+        android:padding="4dp"
+        app:corners="all"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:backgroundColor="?colorPrimary"
+        app:menu="@menu/bottom_menu"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

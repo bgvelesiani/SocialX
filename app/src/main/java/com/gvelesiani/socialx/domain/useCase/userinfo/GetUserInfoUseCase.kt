@@ -4,7 +4,7 @@ import com.gvelesiani.socialx.api.response.ApiError
 import com.gvelesiani.socialx.api.response.ApiException
 import com.gvelesiani.socialx.api.response.ApiSuccess
 import com.gvelesiani.socialx.data.model.auth.UserInfoResponseDto
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
 import com.gvelesiani.socialx.domain.repositories.AuthRepository
 import javax.inject.Inject

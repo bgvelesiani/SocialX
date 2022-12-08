@@ -2,7 +2,7 @@ package com.gvelesiani.socialx.presentation.createpost
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.helpers.uriPath.FileHelper
 import com.gvelesiani.socialx.domain.model.posts.PostRequestModel
 import com.gvelesiani.socialx.domain.useCase.posts.CreatePostUseCase

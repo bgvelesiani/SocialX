@@ -2,7 +2,7 @@ package com.gvelesiani.socialx.presentation.profilesetup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.helpers.uriPath.FileHelper
 import com.gvelesiani.socialx.domain.model.images.AvatarModel
 import com.gvelesiani.socialx.domain.useCase.images.UploadUserAvatarUseCase

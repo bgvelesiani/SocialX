@@ -3,7 +3,7 @@ package com.gvelesiani.socialx.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gvelesiani.socialx.api.Story
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
 import com.gvelesiani.socialx.domain.model.posts.PostModel
 import com.gvelesiani.socialx.domain.useCase.posts.GetPostsUseCase

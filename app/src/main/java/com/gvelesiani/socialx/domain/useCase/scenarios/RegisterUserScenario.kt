@@ -1,6 +1,6 @@
 package com.gvelesiani.socialx.domain.useCase.scenarios
 
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.auth.RegisterModel
 import com.gvelesiani.socialx.domain.model.auth.RegisterResponseModel
 import com.gvelesiani.socialx.domain.useCase.auth.RegisterUserUseCase

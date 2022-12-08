@@ -17,18 +17,16 @@ import com.gvelesiani.socialx.R
 class InputView(context: Context, attrs: AttributeSet) :
     ConstraintLayout(context, attrs) {
 
-    lateinit var input: EditText
-
     private var view: View =
         LayoutInflater.from(context).inflate(R.layout.input_view, this, true)
 
+    private val inputImage = view.findViewById(R.id.ivDrawable) as ImageView
+    private val inputTitle = view.findViewById(R.id.tvInputTitle) as TextView
+    private val input = view.findViewById(R.id.etInput) as EditText
+    private val transformImage = view.findViewById(R.id.ivTransformImage) as ImageView
+
     init {
         var checked = false
-        val inputImage = view.findViewById(R.id.ivDrawable) as ImageView
-        val inputTitle = view.findViewById(R.id.tvInputTitle) as TextView
-        input = view.findViewById(R.id.etInput) as EditText
-        val transformImage = view.findViewById(R.id.ivTransformImage) as ImageView
-
         val typedArray =
             context.theme.obtainStyledAttributes(attrs, R.styleable.InputView, 0, 0)
 
