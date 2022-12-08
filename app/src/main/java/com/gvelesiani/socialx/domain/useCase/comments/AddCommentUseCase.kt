@@ -3,7 +3,7 @@ package com.gvelesiani.socialx.domain.useCase.comments
 import com.gvelesiani.socialx.BaseUseCase
 import com.gvelesiani.socialx.data.model.comment.CommentRequestDto
 import com.gvelesiani.socialx.data.model.comment.CommentResponseDto
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.comments.CommentModel
 import com.gvelesiani.socialx.domain.model.comments.CommentRequestModel
 import com.gvelesiani.socialx.domain.repositories.CommentRepository

@@ -3,7 +3,7 @@ package com.gvelesiani.socialx.presentation.comments
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gvelesiani.socialx.api.Comment
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.comments.CommentModel
 import com.gvelesiani.socialx.domain.model.comments.CommentRequestModel
 import com.gvelesiani.socialx.domain.useCase.comments.AddCommentUseCase
@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +34,9 @@ class CommentsVM @Inject constructor(
                 is ResultModel.Failure -> _uiState.value =
                     CommentUiState.Error(result.error.toString())
                 is ResultModel.Success -> _uiState.value =
-                    CommentUiState.Success(result.value)
+                    CommentUiState.Success(result.value.sortedByDescending {
+                        Date(it.createdAt)
+                    })
             }
         }
     }

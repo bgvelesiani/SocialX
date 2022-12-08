@@ -1,9 +1,6 @@
 package com.gvelesiani.socialx.presentation.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -34,19 +31,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private lateinit var storyAdapter: StoriesAdapter
     private var userInfo: UserInfoResponseModel = UserInfoResponseModel()
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        viewModel.getPosts()
+    override fun setupView(savedInstanceState: Bundle?) {
         viewModel.getUserInfo()
         viewModel.getStories()
-        return super.onCreateView(inflater, container, savedInstanceState)!!
-    }
-
-    override fun setupView(savedInstanceState: Bundle?) {
         setupPostRecyclerView()
         setupStoryRecyclerView()
         setOnClickListeners()
@@ -150,7 +137,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                                     .load("${IMAGES_MICRO_BASE_URL}${state.userInfo.avatar}")
                                     .into(binding.createPostBanner.ivUserAvatar)
                                 userInfo = state.userInfo
-                                adapter.submitUserId(userKey = state.userInfo.key)
+                                setKey(userInfo.key)
+                                viewModel.getPosts()
                             }
 
                             is HomeUiState.StoriesSuccess -> {

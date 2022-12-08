@@ -21,12 +21,13 @@ class LikeOrDislikePostUseCase @Inject constructor(private val repository: PostR
             }
 
             is ApiSuccess -> {
-                ResultModel.Success(result.data.transformToModel())
+                ResultModel.Success(result.data.transformToModel(""))
             }
         }
     }
 }
 
-fun PostResponseDto.transformToModel() = PostModel(
-    key, createdAt, likes, userKey, comments, description, userName, image, userImage
+fun PostResponseDto.transformToModel(currentUserKey: String) = PostModel(
+    key, createdAt, likes, userKey, comments, description, userName, image, userImage,
+    likedByCurrentUser = likes.contains(currentUserKey)
 )

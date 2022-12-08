@@ -18,7 +18,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
+import com.gvelesiani.socialx.common.PERMISSIONS
+import com.gvelesiani.socialx.common.PERMISSION_ALL
 import com.gvelesiani.socialx.common.applyBundle
+import com.gvelesiani.socialx.common.hasPermissions
 import com.gvelesiani.socialx.databinding.FragmentUploadAvatarBinding
 import com.gvelesiani.socialx.presentation.adapters.AvatarAdapter
 import com.gvelesiani.socialx.presentation.home.HomeFragment
@@ -41,13 +44,15 @@ class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>(FragmentU
 
     override fun setupView(savedInstanceState: Bundle?) {
         userKey = arguments?.getString("userKey")
-        if (!hasPermissions(requireContext(), *PERMISSIONS)) {
-            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, PERMISSION_ALL);
-        }
+        requestPermissions()
         setupRecyclerView(userKey!!)
 
         binding.btChooseFromGallery.setOnClickListener {
-            pickImagesLauncher.launch("image/*")
+            if (!hasPermissions(requireContext(), *PERMISSIONS)) {
+                ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, PERMISSION_ALL)
+            } else {
+                pickImagesLauncher.launch("image/*")
+            }
         }
 
         binding.btSkip.setOnClickListener {
@@ -58,6 +63,12 @@ class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>(FragmentU
 
         binding.btUploadPhoto.setOnClickListener {
             image?.let { image -> viewModel.uploadUserAvatar(image) }
+        }
+    }
+
+    private fun requestPermissions(){
+        if (!hasPermissions(requireContext(), *PERMISSIONS)) {
+            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, PERMISSION_ALL);
         }
     }
 
@@ -124,18 +135,7 @@ class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>(FragmentU
             }
         }
 
-    private fun hasPermissions(context: Context, vararg permissions: String): Boolean =
-        permissions.all {
-            ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
-        }
-
     companion object {
-        private const val PERMISSION_ALL = 1
-        private val PERMISSIONS = arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
-        )
-
         fun newInstance(userKey: String): UploadAvatarFragment =
             UploadAvatarFragment().applyBundle {
                 putString("userKey", userKey)

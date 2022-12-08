@@ -4,7 +4,7 @@ import com.gvelesiani.socialx.api.response.ApiError
 import com.gvelesiani.socialx.api.response.ApiException
 import com.gvelesiani.socialx.api.response.ApiResult
 import com.gvelesiani.socialx.api.response.ApiSuccess
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 
 interface BaseUseCase<Params, Result : Any> {
     suspend operator fun invoke(params: Params): ResultModel<Result, String>
