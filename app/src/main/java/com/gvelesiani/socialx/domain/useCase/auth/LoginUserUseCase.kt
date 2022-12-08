@@ -5,7 +5,7 @@ import com.gvelesiani.socialx.api.response.ApiException
 import com.gvelesiani.socialx.api.response.ApiSuccess
 import com.gvelesiani.socialx.data.model.auth.LoginRequestDto
 import com.gvelesiani.socialx.data.model.auth.LoginResponseDto
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.auth.LoginModel
 import com.gvelesiani.socialx.domain.model.auth.LoginResponseModel
 import com.gvelesiani.socialx.domain.repositories.AuthRepository

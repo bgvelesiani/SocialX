@@ -3,7 +3,7 @@ package com.gvelesiani.socialx.domain.useCase.images
 import com.gvelesiani.socialx.api.response.ApiError
 import com.gvelesiani.socialx.api.response.ApiException
 import com.gvelesiani.socialx.api.response.ApiSuccess
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.images.AvatarModel
 import com.gvelesiani.socialx.domain.repositories.ImageRepository
 import javax.inject.Inject

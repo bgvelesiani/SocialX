@@ -1,4 +1,4 @@
-package com.gvelesiani.socialx.domain
+package com.gvelesiani.socialx.domain.model
 
 import java.io.Serializable
 

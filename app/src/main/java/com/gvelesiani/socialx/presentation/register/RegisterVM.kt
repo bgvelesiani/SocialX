@@ -2,7 +2,7 @@ package com.gvelesiani.socialx.presentation.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gvelesiani.socialx.domain.ResultModel
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.auth.RegisterModel
 import com.gvelesiani.socialx.domain.useCase.scenarios.RegisterUserScenario
 import dagger.hilt.android.lifecycle.HiltViewModel

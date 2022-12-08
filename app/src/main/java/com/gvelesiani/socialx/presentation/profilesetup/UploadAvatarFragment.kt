@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
@@ -21,6 +22,7 @@ import com.gvelesiani.socialx.common.applyBundle
 import com.gvelesiani.socialx.databinding.FragmentUploadAvatarBinding
 import com.gvelesiani.socialx.presentation.adapters.AvatarAdapter
 import com.gvelesiani.socialx.presentation.home.HomeFragment
+import com.gvelesiani.socialx.presentation.login.LoginFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -38,7 +40,7 @@ class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>(FragmentU
     private var selectedImageUri: Uri? = null
 
     override fun setupView(savedInstanceState: Bundle?) {
-        userKey = "test"//arguments?.getString("userKey")
+        userKey = arguments?.getString("userKey")
         if (!hasPermissions(requireContext(), *PERMISSIONS)) {
             ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, PERMISSION_ALL);
         }
@@ -46,6 +48,12 @@ class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>(FragmentU
 
         binding.btChooseFromGallery.setOnClickListener {
             pickImagesLauncher.launch("image/*")
+        }
+
+        binding.btSkip.setOnClickListener {
+            parentFragmentManager.commit {
+                replace<HomeFragment>(R.id.container)
+            }
         }
 
         binding.btUploadPhoto.setOnClickListener {
