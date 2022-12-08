@@ -9,5 +9,6 @@ data class PostModel(
     val description: String = "",
     val userName: String = "",
     val image: String = "",
-    val userImage: String = ""
+    val userImage: String = "",
+    val likedByCurrentUser: Boolean = false
 )

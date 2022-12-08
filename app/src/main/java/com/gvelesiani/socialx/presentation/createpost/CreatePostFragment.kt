@@ -1,10 +1,12 @@
 package com.gvelesiani.socialx.presentation.createpost
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,8 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
-import com.gvelesiani.socialx.common.IMAGES_MICRO_BASE_URL
-import com.gvelesiani.socialx.common.applyBundle
+import com.gvelesiani.socialx.common.*
 import com.gvelesiani.socialx.databinding.FragmentCreatePostBinding
 import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
 import com.gvelesiani.socialx.domain.model.posts.PostRequestModel
@@ -25,15 +26,14 @@ import java.io.File
 
 @Suppress("DEPRECATION") // TODO: Remove this because getParcelable is deprecated
 @AndroidEntryPoint
-class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
+class CreatePostFragment :
+    BaseFragment<FragmentCreatePostBinding>(FragmentCreatePostBinding::inflate) {
     private val viewModel: CreatePostVM by viewModels()
     private var postImage: File? = null
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCreatePostBinding
-        get() = FragmentCreatePostBinding::inflate
-
     @SuppressLint("IntentReset")
     override fun setupView(savedInstanceState: Bundle?) {
+        requestPermissions()
         val userInfo = arguments?.getParcelable<UserInfoResponseModel>("userInfo")
         userInfo?.let {
             Glide.with(binding.ivUserAvatar).load("${IMAGES_MICRO_BASE_URL}${it.avatar}")
@@ -55,7 +55,21 @@ class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
         }
 
         binding.btNewPhoto.root.setOnClickListener {
-            pickImagesLauncher.launch("image/*")
+            if (!hasPermissions(requireContext(), *PERMISSIONS)) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    PERMISSIONS,
+                    PERMISSION_ALL
+                )
+            } else {
+                pickImagesLauncher.launch("image/*")
+            }
+        }
+    }
+
+    private fun requestPermissions(){
+        if (!hasPermissions(requireContext(), *PERMISSIONS)) {
+            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, PERMISSION_ALL);
         }
     }
 

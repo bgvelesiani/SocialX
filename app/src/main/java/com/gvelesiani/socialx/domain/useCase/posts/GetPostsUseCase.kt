@@ -9,7 +9,7 @@ import com.gvelesiani.socialx.domain.repositories.PostRepository
 import javax.inject.Inject
 
 class GetPostsUseCase @Inject constructor(private val postRepository: PostRepository) {
-    suspend fun invoke(): ResultModel<List<PostModel>, String> {
+    suspend fun invoke(userKey: String): ResultModel<List<PostModel>, String> {
         return when (val result = postRepository.getPosts()) {
             is ApiError -> {
                 ResultModel.Failure(result.message)
@@ -20,7 +20,7 @@ class GetPostsUseCase @Inject constructor(private val postRepository: PostReposi
             }
 
             is ApiSuccess -> {
-                ResultModel.Success(result.data.map { it.transformToModel() })
+                ResultModel.Success(result.data.map { it.transformToModel(userKey) })
             }
         }
     }

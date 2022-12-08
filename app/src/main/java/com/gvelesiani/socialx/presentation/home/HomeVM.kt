@@ -13,7 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.util.Date
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +25,11 @@ class HomeVM @Inject constructor(
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Empty)
     val uiState: StateFlow<HomeUiState> = _uiState
 
+    var userKey = ""
+
+    fun setKey(userKey: String) {
+        this.userKey = userKey
+    }
     fun getUserInfo() {
         _uiState.value = HomeUiState.Loading
         viewModelScope.launch {
@@ -53,7 +58,7 @@ class HomeVM @Inject constructor(
 
     fun getPosts() {
         viewModelScope.launch {
-            when (val result = getPostsUseCase.invoke()) {
+            when (val result = getPostsUseCase.invoke(userKey)) {
                 is ResultModel.Failure -> {
                     _uiState.value = HomeUiState.Error(result.error.toString())
                 }

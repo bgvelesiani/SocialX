@@ -1,10 +1,6 @@
 package com.gvelesiani.socialx.api
 
-import com.gvelesiani.socialx.data.model.auth.LoginRequestDto
-import com.gvelesiani.socialx.data.model.auth.LoginResponseDto
-import com.gvelesiani.socialx.data.model.auth.RegisterRequestDto
-import com.gvelesiani.socialx.data.model.auth.RegisterResponseDto
-import com.gvelesiani.socialx.data.model.auth.UserInfoResponseDto
+import com.gvelesiani.socialx.data.model.auth.*
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

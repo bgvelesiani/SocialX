@@ -1,8 +1,10 @@
 package com.gvelesiani.socialx.common
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.app.ActivityCompat
 
 fun hideKeyboard(v: View?, removeFocus: Boolean = true) {
     if (v != null) {
@@ -13,3 +15,8 @@ fun hideKeyboard(v: View?, removeFocus: Boolean = true) {
         imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }
+
+fun hasPermissions(context: Context, vararg permissions: String): Boolean =
+    permissions.all {
+        ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }

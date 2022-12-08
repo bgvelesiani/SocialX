@@ -1,9 +1,6 @@
 package com.gvelesiani.socialx.presentation.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -20,6 +17,7 @@ import com.gvelesiani.socialx.databinding.FragmentHomeBinding
 import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
 import com.gvelesiani.socialx.presentation.adapters.PostAdapter
 import com.gvelesiani.socialx.presentation.adapters.StoriesAdapter
+import com.gvelesiani.socialx.presentation.comments.CommentsFragment
 import com.gvelesiani.socialx.presentation.createpost.CreatePostFragment
 import com.gvelesiani.socialx.presentation.search.SearchFragment
 import com.gvelesiani.socialx.presentation.story.StoryFragment
@@ -27,27 +25,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
     private val viewModel: HomeVM by activityViewModels()
     private lateinit var adapter: PostAdapter
     private lateinit var storyAdapter: StoriesAdapter
     private var userInfo: UserInfoResponseModel = UserInfoResponseModel()
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
-        get() = FragmentHomeBinding::inflate
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        viewModel.getPosts()
+    override fun setupView(savedInstanceState: Bundle?) {
         viewModel.getUserInfo()
         viewModel.getStories()
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-    override fun setupView(savedInstanceState: Bundle?) {
         setupPostRecyclerView()
         setupStoryRecyclerView()
         setOnClickListeners()
@@ -86,16 +72,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun setupPostRecyclerView() {
         adapter = PostAdapter(
             clickListener = {
-//                parentFragmentManager.commit {
-//                    setCustomAnimations(
-//                        R.anim.slide_from_bot,
-//                        R.anim.slide_to_bot,
-//                        R.anim.slide_from_bot,
-//                        R.anim.slide_to_bot
-//                    )
+                parentFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.slide_from_bot,
+                        R.anim.slide_to_bot,
+                        R.anim.slide_from_bot,
+                        R.anim.slide_to_bot
+                    )
 //                        .add(R.id.container, CommentsFragment.newInstance(it.id, userImage = userInfo.avatar?.url ?: ""))
-//                        .addToBackStack(toString())
-//                }
+                        .add(
+                            R.id.container,
+                            CommentsFragment.newInstance(
+                                it.key,
+                                userInfo.avatar,
+                                userInfo.name
+                            )
+                        )
+                        .addToBackStack(toString())
+                }
             },
             like = {
                 viewModel.likeOrDislikePost(it)
@@ -126,7 +120,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     uiState.collect { uiState ->
                         when (val state = uiState) {
                             is HomeUiState.Empty -> {}
-                            is HomeUiState.Error -> {}
+                            is HomeUiState.Error -> {
+                                showLoader(false)
+                            }
                             is HomeUiState.Loading -> {
                                 showLoader(true)
                             }
@@ -141,7 +137,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                                     .load("${IMAGES_MICRO_BASE_URL}${state.userInfo.avatar}")
                                     .into(binding.createPostBanner.ivUserAvatar)
                                 userInfo = state.userInfo
-                                adapter.submitUserId(userKey = state.userInfo.key)
+                                setKey(userInfo.key)
+                                viewModel.getPosts()
                             }
 
                             is HomeUiState.StoriesSuccess -> {

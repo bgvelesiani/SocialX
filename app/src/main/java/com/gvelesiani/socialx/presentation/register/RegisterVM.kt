@@ -30,7 +30,7 @@ class RegisterVM @Inject constructor(
                 )
             )) {
                 is ResultModel.Failure -> {
-                    _uiState.value = RegisterUiState.Error(result.ex?.message!!)
+                    _uiState.value = RegisterUiState.Error(result.ex?.message ?: "")
                 }
 
                 is ResultModel.Success -> {

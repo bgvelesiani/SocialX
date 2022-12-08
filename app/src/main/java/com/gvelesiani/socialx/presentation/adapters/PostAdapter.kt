@@ -11,7 +11,7 @@ import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.common.IMAGES_MICRO_BASE_URL
 import com.gvelesiani.socialx.databinding.PostItemBinding
 import com.gvelesiani.socialx.domain.model.posts.PostModel
-import java.util.Date
+import java.util.*
 
 class PostAdapter(
     private val clickListener: (PostModel) -> Unit,
@@ -20,16 +20,11 @@ class PostAdapter(
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var postList: List<PostModel> = arrayListOf()
     var binding: PostItemBinding? = null
-    private var userkey: String = ""
 
     @SuppressLint("NotifyDataSetChanged")
     fun submitData(data: List<PostModel>) {
         postList = data
         notifyDataSetChanged()
-    }
-
-    fun submitUserId(userKey: String) {
-        this.userkey = userKey
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -72,9 +67,9 @@ class PostAdapter(
                         like.invoke(post.key)
                     }
 
-                    ivLike.setImageResource(if (post.likes.contains(userkey)) R.drawable.ic_like else R.drawable.ic_not_liked)
+                    ivLike.setImageResource(if (post.likedByCurrentUser) R.drawable.ic_like else R.drawable.ic_not_liked)
                     tvLikes.setTextColor(
-                        if (post.likes.contains(userkey)) {
+                        if (post.likedByCurrentUser) {
                             ContextCompat.getColor(root.context, R.color.seed)
                         } else {
                             ContextCompat.getColor(
