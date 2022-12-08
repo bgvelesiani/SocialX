@@ -1,6 +1,7 @@
 package com.gvelesiani.socialx.hiltModules
 
 import com.gvelesiani.socialx.api.AuthorizationApi
+import com.gvelesiani.socialx.api.CommentsApi
 import com.gvelesiani.socialx.api.ImagesApi
 import com.gvelesiani.socialx.api.PostsApi
 import com.gvelesiani.socialx.domain.repositories.AuthTokenRepository
@@ -54,4 +55,7 @@ object NetworkModule {
 
     @Provides
     fun providePostApi(retrofit: Retrofit): PostsApi = retrofit.create(PostsApi::class.java)
+
+    @Provides
+    fun provideCommentApi(retrofit: Retrofit): CommentsApi = retrofit.create(CommentsApi::class.java)
 }

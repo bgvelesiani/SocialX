@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -33,14 +31,11 @@ import java.io.File
 
 
 @AndroidEntryPoint
-class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>() {
+class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>(FragmentUploadAvatarBinding::inflate) {
     private var userKey: String? = ""
     private val viewModel: UploadAvatarVM by viewModels()
     private var image: MultipartBody.Part? = null
     private var selectedImageUri: Uri? = null
-
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentUploadAvatarBinding
-        get() = FragmentUploadAvatarBinding::inflate
 
     override fun setupView(savedInstanceState: Bundle?) {
         userKey = "test"//arguments?.getString("userKey")

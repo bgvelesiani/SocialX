@@ -2,8 +2,6 @@ package com.gvelesiani.socialx.presentation.createpost
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -25,12 +23,9 @@ import java.io.File
 
 @Suppress("DEPRECATION") // TODO: Remove this because getParcelable is deprecated
 @AndroidEntryPoint
-class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>() {
+class CreatePostFragment : BaseFragment<FragmentCreatePostBinding>(FragmentCreatePostBinding::inflate) {
     private val viewModel: CreatePostVM by viewModels()
     private var postImage: File? = null
-
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCreatePostBinding
-        get() = FragmentCreatePostBinding::inflate
 
     @SuppressLint("IntentReset")
     override fun setupView(savedInstanceState: Bundle?) {

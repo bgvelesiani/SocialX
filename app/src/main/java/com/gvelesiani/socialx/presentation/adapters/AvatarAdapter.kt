@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.databinding.AvatarItemBinding
-import java.io.File
 
 
 class AvatarAdapter(

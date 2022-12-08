@@ -1,8 +1,6 @@
 package com.gvelesiani.socialx.presentation.login
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,16 +10,12 @@ import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.databinding.FragmentLoginBinding
 import com.gvelesiani.socialx.presentation.home.HomeFragment
 import com.gvelesiani.socialx.presentation.login.LoginVM.LoginUiState
-import com.gvelesiani.socialx.presentation.profilesetup.UploadAvatarFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     private val viewModel: LoginVM by viewModels()
-
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
-        get() = FragmentLoginBinding::inflate
 
     override fun setupView(savedInstanceState: Bundle?) {
         setOnClickListeners()

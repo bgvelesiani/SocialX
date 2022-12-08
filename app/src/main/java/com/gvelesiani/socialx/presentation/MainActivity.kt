@@ -11,8 +11,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.databinding.ActivityMainBinding
 import com.gvelesiani.socialx.presentation.home.HomeFragment
-import com.gvelesiani.socialx.presentation.login.LoginFragment
-import com.gvelesiani.socialx.presentation.profilesetup.UploadAvatarFragment
 import com.gvelesiani.socialx.presentation.register.RegisterFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

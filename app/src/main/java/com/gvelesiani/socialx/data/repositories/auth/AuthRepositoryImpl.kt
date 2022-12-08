@@ -3,11 +3,7 @@ package com.gvelesiani.socialx.data.repositories.auth
 import com.gvelesiani.socialx.api.AuthorizationApi
 import com.gvelesiani.socialx.api.response.ApiResult
 import com.gvelesiani.socialx.api.response.handleApi
-import com.gvelesiani.socialx.data.model.auth.LoginRequestDto
-import com.gvelesiani.socialx.data.model.auth.LoginResponseDto
-import com.gvelesiani.socialx.data.model.auth.RegisterRequestDto
-import com.gvelesiani.socialx.data.model.auth.RegisterResponseDto
-import com.gvelesiani.socialx.data.model.auth.UserInfoResponseDto
+import com.gvelesiani.socialx.data.model.auth.*
 import com.gvelesiani.socialx.domain.repositories.AuthRepository
 import javax.inject.Inject
 

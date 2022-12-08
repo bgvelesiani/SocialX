@@ -11,7 +11,7 @@ import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.common.IMAGES_MICRO_BASE_URL
 import com.gvelesiani.socialx.databinding.PostItemBinding
 import com.gvelesiani.socialx.domain.model.posts.PostModel
-import java.util.Date
+import java.util.*
 
 class PostAdapter(
     private val clickListener: (PostModel) -> Unit,
@@ -57,7 +57,7 @@ class PostAdapter(
             with(binding) {
                 cvPostImage.visibility = if (post.image != "") View.VISIBLE else View.GONE
 
-                Glide.with(root).load("$IMAGES_MICRO_BASE_URL${post.userImage}")
+                Glide.with(root).load("$IMAGES_MICRO_BASE_URL${post.xuserImage}")
                     .placeholder(R.drawable.ic_launcher_background).into(ivUserAvatar)
 
                 Glide.with(root).load("$IMAGES_MICRO_BASE_URL${post.image}").into(ivPostImage)

@@ -20,6 +20,7 @@ import com.gvelesiani.socialx.databinding.FragmentHomeBinding
 import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
 import com.gvelesiani.socialx.presentation.adapters.PostAdapter
 import com.gvelesiani.socialx.presentation.adapters.StoriesAdapter
+import com.gvelesiani.socialx.presentation.comments.CommentsFragment
 import com.gvelesiani.socialx.presentation.createpost.CreatePostFragment
 import com.gvelesiani.socialx.presentation.search.SearchFragment
 import com.gvelesiani.socialx.presentation.story.StoryFragment
@@ -27,14 +28,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
     private val viewModel: HomeVM by activityViewModels()
     private lateinit var adapter: PostAdapter
     private lateinit var storyAdapter: StoriesAdapter
     private var userInfo: UserInfoResponseModel = UserInfoResponseModel()
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
-        get() = FragmentHomeBinding::inflate
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +43,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.getPosts()
         viewModel.getUserInfo()
         viewModel.getStories()
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return super.onCreateView(inflater, container, savedInstanceState)!!
     }
 
     override fun setupView(savedInstanceState: Bundle?) {
@@ -86,16 +85,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun setupPostRecyclerView() {
         adapter = PostAdapter(
             clickListener = {
-//                parentFragmentManager.commit {
-//                    setCustomAnimations(
-//                        R.anim.slide_from_bot,
-//                        R.anim.slide_to_bot,
-//                        R.anim.slide_from_bot,
-//                        R.anim.slide_to_bot
-//                    )
+                parentFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.slide_from_bot,
+                        R.anim.slide_to_bot,
+                        R.anim.slide_from_bot,
+                        R.anim.slide_to_bot
+                    )
 //                        .add(R.id.container, CommentsFragment.newInstance(it.id, userImage = userInfo.avatar?.url ?: ""))
-//                        .addToBackStack(toString())
-//                }
+                        .add(
+                            R.id.container,
+                            CommentsFragment.newInstance(
+                                it.key,
+                                userInfo.avatar,
+                                userInfo.name
+                            )
+                        )
+                        .addToBackStack(toString())
+                }
             },
             like = {
                 viewModel.likeOrDislikePost(it)
@@ -126,7 +133,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     uiState.collect { uiState ->
                         when (val state = uiState) {
                             is HomeUiState.Empty -> {}
-                            is HomeUiState.Error -> {}
+                            is HomeUiState.Error -> {
+                                showLoader(false)
+                            }
                             is HomeUiState.Loading -> {
                                 showLoader(true)
                             }
