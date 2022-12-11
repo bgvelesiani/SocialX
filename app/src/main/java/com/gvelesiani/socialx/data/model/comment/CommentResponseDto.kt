@@ -8,7 +8,7 @@ data class CommentResponseDto(
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("user_key")
-    val userKey: String? = "",
+    var userKey: String? = "",
     @SerializedName("text")
     val text: String,
     @SerializedName("post_id")
@@ -16,5 +16,7 @@ data class CommentResponseDto(
     @SerializedName("user_avatar")
     val userAvatar: String? = "",
     @SerializedName("user_name")
-    val userName: String? = ""
+    val userName: String? = "",
+    @SerializedName("likes")
+    val likes: List<String> = listOf()
 )

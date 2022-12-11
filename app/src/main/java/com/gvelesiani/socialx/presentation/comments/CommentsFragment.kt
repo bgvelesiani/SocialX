@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.gvelesiani.socialx.BaseFragment
+import com.gvelesiani.socialx.base.BaseFragment
 import com.gvelesiani.socialx.common.IMAGES_MICRO_BASE_URL
 import com.gvelesiani.socialx.common.applyBundle
 import com.gvelesiani.socialx.common.hideKeyboard
@@ -28,13 +28,15 @@ class CommentsFragment : BaseFragment<FragmentCommentsBinding>(FragmentCommentsB
     private lateinit var postId: String
     private lateinit var userImage: String
     private lateinit var userName: String
+    private lateinit var userKey: String
 
     override fun setupView(savedInstanceState: Bundle?) {
         postId = arguments?.getString("postId") ?: ""
         userImage = arguments?.getString("userImage") ?: ""
         userName = arguments?.getString("userName") ?: ""
+        userName = arguments?.getString("userKey") ?: ""
         setupRecyclerView()
-        viewModel.getComments(postId)
+        viewModel.getComments(postId, userName)
         setOnClickListeners(postId)
         Glide.with(binding.root).load("$IMAGES_MICRO_BASE_URL$userImage")
             .into(binding.addComment.ivUserAvatar)
@@ -48,7 +50,7 @@ class CommentsFragment : BaseFragment<FragmentCommentsBinding>(FragmentCommentsB
                 }
                 btComment.setOnClickListener {
                     val text = etComment.text.toString()
-                    viewModel.addComment(postId, text, userImage, userName)
+                    viewModel.addComment(postId, text, userImage, userName, userKey)
                 }
             }
             backClickArea.setOnClickListener {
@@ -58,7 +60,9 @@ class CommentsFragment : BaseFragment<FragmentCommentsBinding>(FragmentCommentsB
     }
 
     private fun setupRecyclerView() {
-        adapter = CommentAdapter(clickListener = {}, like = {})
+        adapter = CommentAdapter(clickListener = {}, like = {
+            viewModel.likeOrDislikeComment(it, postId, userName)
+        })
         binding.rvComments.adapter = adapter
         binding.rvComments.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -112,11 +116,17 @@ class CommentsFragment : BaseFragment<FragmentCommentsBinding>(FragmentCommentsB
     }
 
     companion object {
-        fun newInstance(postId: String, userImage: String, userName: String): CommentsFragment =
+        fun newInstance(
+            postId: String,
+            userImage: String,
+            userName: String,
+            userKey: String
+        ): CommentsFragment =
             CommentsFragment().applyBundle {
                 putString("postId", postId)
                 putString("userImage", userImage)
                 putString("userName", userName)
+                putString("userKey", userKey)
             }
     }
 }

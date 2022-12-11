@@ -1,8 +1,5 @@
 package com.gvelesiani.socialx.presentation.profilesetup
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,10 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
+import com.gvelesiani.socialx.base.BaseFragment
 import com.gvelesiani.socialx.common.PERMISSIONS
 import com.gvelesiani.socialx.common.PERMISSION_ALL
 import com.gvelesiani.socialx.common.applyBundle
@@ -25,7 +21,6 @@ import com.gvelesiani.socialx.common.hasPermissions
 import com.gvelesiani.socialx.databinding.FragmentUploadAvatarBinding
 import com.gvelesiani.socialx.presentation.adapters.AvatarAdapter
 import com.gvelesiani.socialx.presentation.home.HomeFragment
-import com.gvelesiani.socialx.presentation.login.LoginFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -68,7 +63,7 @@ class UploadAvatarFragment : BaseFragment<FragmentUploadAvatarBinding>(FragmentU
 
     private fun requestPermissions(){
         if (!hasPermissions(requireContext(), *PERMISSIONS)) {
-            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, PERMISSION_ALL);
+            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, PERMISSION_ALL)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.gvelesiani.socialx
+package com.gvelesiani.socialx.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,6 @@ abstract class BaseFragment<B : ViewBinding>(protected val inflater: Inflater<B>
 
     private var _binding: B? = null
     val binding get() = _binding!!
-
-//    abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> B
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

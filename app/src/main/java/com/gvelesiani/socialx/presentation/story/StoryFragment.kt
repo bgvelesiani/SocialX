@@ -1,8 +1,8 @@
 package com.gvelesiani.socialx.presentation.story
 
 import android.os.Bundle
-import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.api.Story
+import com.gvelesiani.socialx.base.BaseFragment
 import com.gvelesiani.socialx.common.applyBundle
 import com.gvelesiani.socialx.databinding.FragmentStoryBinding
 import com.gvelesiani.socialx.presentation.adapters.StoryPagerAdapter

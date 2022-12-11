@@ -15,4 +15,7 @@ class CommentRepositoryImpl @Inject constructor(private val api: CommentsApi) : 
 
     override suspend fun getPostComments(postId: String): ApiResult<List<CommentResponseDto>> =
         handleApi { api.getPostComments(postId) }
+
+    override suspend fun likeOrDislikeComment(commentKey: String): ApiResult<CommentResponseDto> =
+        handleApi { api.likeOrDislikeComment(commentKey) }
 }

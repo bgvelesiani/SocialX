@@ -61,4 +61,6 @@
     <color name="md_theme_dark_surfaceTint">#C0C1FF</color>
     <color name="md_theme_dark_outlineVariant">#46464F</color>
     <color name="md_theme_dark_scrim">#000000</color>
+    <color name="liked">#5458F7</color>
+    <color name="comment_like_txt">#9597A1</color>
 </resources>

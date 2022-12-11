@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import com.gvelesiani.socialx.BaseFragment
+import com.gvelesiani.socialx.base.BaseFragment
 import com.gvelesiani.socialx.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 

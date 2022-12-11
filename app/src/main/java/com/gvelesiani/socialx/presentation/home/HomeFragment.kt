@@ -9,9 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
 import com.gvelesiani.socialx.api.Story
+import com.gvelesiani.socialx.base.BaseFragment
 import com.gvelesiani.socialx.common.IMAGES_MICRO_BASE_URL
 import com.gvelesiani.socialx.databinding.FragmentHomeBinding
 import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
@@ -85,7 +85,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             CommentsFragment.newInstance(
                                 it.key,
                                 userInfo.avatar,
-                                userInfo.name
+                                userInfo.name,
+                                userInfo.key
                             )
                         )
                         .addToBackStack(toString())

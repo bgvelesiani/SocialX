@@ -1,9 +1,6 @@
 package com.gvelesiani.socialx.presentation.createpost
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -12,8 +9,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
-import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
+import com.gvelesiani.socialx.base.BaseFragment
 import com.gvelesiani.socialx.common.*
 import com.gvelesiani.socialx.databinding.FragmentCreatePostBinding
 import com.gvelesiani.socialx.domain.model.auth.UserInfoResponseModel
@@ -69,7 +66,7 @@ class CreatePostFragment :
 
     private fun requestPermissions(){
         if (!hasPermissions(requireContext(), *PERMISSIONS)) {
-            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, PERMISSION_ALL);
+            ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, PERMISSION_ALL)
         }
     }
 

@@ -8,6 +8,7 @@ import com.gvelesiani.socialx.domain.model.comments.CommentModel
 import com.gvelesiani.socialx.domain.model.comments.CommentRequestModel
 import com.gvelesiani.socialx.domain.useCase.comments.AddCommentUseCase
 import com.gvelesiani.socialx.domain.useCase.comments.GetPostCommentsUseCase
+import com.gvelesiani.socialx.domain.useCase.comments.LikeOrDislikeCommentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CommentsVM @Inject constructor(
     private val addCommentUseCase: AddCommentUseCase,
-    private val getPostCommentsUseCase: GetPostCommentsUseCase
+    private val getPostCommentsUseCase: GetPostCommentsUseCase,
+    private val likeOrDislikeCommentUseCase: LikeOrDislikeCommentUseCase
 ) :
     ViewModel() {
     private val _comments: MutableStateFlow<List<Comment>> = MutableStateFlow(listOf())
@@ -27,10 +29,10 @@ class CommentsVM @Inject constructor(
     private val _uiState = MutableStateFlow<CommentUiState>(CommentUiState.Empty)
     val uiState: StateFlow<CommentUiState> = _uiState
 
-    fun getComments(postId: String) {
+    fun getComments(postId: String,userKey: String) {
         _uiState.value = CommentUiState.Loading
         viewModelScope.launch {
-            when (val result = getPostCommentsUseCase(postId)) {
+            when (val result = getPostCommentsUseCase(Pair(postId,userKey))) {
                 is ResultModel.Failure -> _uiState.value =
                     CommentUiState.Error(result.error.toString())
                 is ResultModel.Success -> _uiState.value =
@@ -41,7 +43,7 @@ class CommentsVM @Inject constructor(
         }
     }
 
-    fun addComment(postId: String, text: String, avatar: String, userName: String) {
+    fun addComment(postId: String, text: String, avatar: String, userName: String,userKey: String) {
         _uiState.value = CommentUiState.Loading
         viewModelScope.launch {
             when (val result =
@@ -50,7 +52,20 @@ class CommentsVM @Inject constructor(
                     CommentUiState.Error(result.error.toString())
                 is ResultModel.Success -> {
                     _uiState.value = CommentUiState.CommentSuccess
-                    getComments(postId)
+                    getComments(postId,userKey)
+                }
+            }
+        }
+    }
+    fun likeOrDislikeComment(commentKey: String, postId: String,userKey: String) {
+        _uiState.value = CommentUiState.Loading
+        viewModelScope.launch {
+            when (val result =
+                likeOrDislikeCommentUseCase(commentKey)) {
+                is ResultModel.Failure -> _uiState.value =
+                    CommentUiState.Error(result.error.toString())
+                is ResultModel.Success -> {
+                    getComments(postId,userKey)
                 }
             }
         }

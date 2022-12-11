@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.color.MaterialColors
-import com.gvelesiani.socialx.BaseFragment
 import com.gvelesiani.socialx.R
+import com.gvelesiani.socialx.base.BaseFragment
 import com.gvelesiani.socialx.databinding.FragmentLoginBinding
 import com.gvelesiani.socialx.presentation.home.HomeFragment
 import com.gvelesiani.socialx.presentation.login.LoginVM.LoginUiState

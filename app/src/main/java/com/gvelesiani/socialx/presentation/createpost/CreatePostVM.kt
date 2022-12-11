@@ -2,8 +2,8 @@ package com.gvelesiani.socialx.presentation.createpost
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.helpers.uriPath.FileHelper
+import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.posts.PostRequestModel
 import com.gvelesiani.socialx.domain.useCase.posts.CreatePostUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +27,7 @@ class CreatePostVM @Inject constructor(
     val uiState: StateFlow<CreatePostUiState> = _uiState
     fun createPost(postRequest: PostRequestModel, image: File? = null) {
         viewModelScope.launch {
-            when (val result = createPostUseCase.invoke(image, postRequest.description)) {
+            when (val result = createPostUseCase.invoke(Pair(image, postRequest.description))) {
                 is ResultModel.Success -> {
                     _uiState.value = CreatePostUiState.Success
                 }

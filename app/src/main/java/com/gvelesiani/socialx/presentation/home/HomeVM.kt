@@ -33,7 +33,7 @@ class HomeVM @Inject constructor(
     fun getUserInfo() {
         _uiState.value = HomeUiState.Loading
         viewModelScope.launch {
-            when (val result = getUserInfoUseCase.invoke()) {
+            when (val result = getUserInfoUseCase.invoke(Unit)) {
                 is ResultModel.Failure -> {}
                 is ResultModel.Success -> {
                     _uiState.value = HomeUiState.UserInfoSuccess(result.value)

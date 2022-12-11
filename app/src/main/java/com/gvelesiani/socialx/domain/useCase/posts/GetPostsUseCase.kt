@@ -1,27 +1,14 @@
 package com.gvelesiani.socialx.domain.useCase.posts
 
-import com.gvelesiani.socialx.api.response.ApiError
-import com.gvelesiani.socialx.api.response.ApiException
-import com.gvelesiani.socialx.api.response.ApiSuccess
+import com.gvelesiani.socialx.base.BaseUseCase
 import com.gvelesiani.socialx.domain.model.ResultModel
 import com.gvelesiani.socialx.domain.model.posts.PostModel
+import com.gvelesiani.socialx.domain.model.transformers.transformToModel
 import com.gvelesiani.socialx.domain.repositories.PostRepository
 import javax.inject.Inject
 
-class GetPostsUseCase @Inject constructor(private val postRepository: PostRepository) {
-    suspend fun invoke(userKey: String): ResultModel<List<PostModel>, String> {
-        return when (val result = postRepository.getPosts()) {
-            is ApiError -> {
-                ResultModel.Failure(result.message)
-            }
-
-            is ApiException -> {
-                ResultModel.Failure(result.e.message)
-            }
-
-            is ApiSuccess -> {
-                ResultModel.Success(result.data.map { it.transformToModel(userKey) })
-            }
-        }
-    }
+class GetPostsUseCase @Inject constructor(private val postRepository: PostRepository) :
+    BaseUseCase<String, List<PostModel>> {
+    override suspend fun invoke(params: String): ResultModel<List<PostModel>, String> =
+        getResult(postRepository.getPosts()){it.map { dto -> dto.transformToModel(params) }}
 }

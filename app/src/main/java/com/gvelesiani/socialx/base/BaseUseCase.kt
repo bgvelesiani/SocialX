@@ -1,4 +1,4 @@
-package com.gvelesiani.socialx
+package com.gvelesiani.socialx.base
 
 import com.gvelesiani.socialx.api.response.ApiError
 import com.gvelesiani.socialx.api.response.ApiException
@@ -13,9 +13,9 @@ interface BaseUseCase<Params, Result : Any> {
         result: ApiResult<Dto>, mapSuccessToModel: (Dto) -> Model
     ): ResultModel<Model, String> {
         return when (result) {
+            is ApiSuccess -> ResultModel.Success(mapSuccessToModel(result.data))
             is ApiError -> ResultModel.Failure(result.message)
             is ApiException -> ResultModel.Failure(result.e.message)
-            is ApiSuccess -> ResultModel.Success(mapSuccessToModel(result.data))
         }
     }
 }
