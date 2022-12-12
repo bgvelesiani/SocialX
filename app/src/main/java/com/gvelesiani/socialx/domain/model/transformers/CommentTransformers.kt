@@ -6,9 +6,9 @@ import com.gvelesiani.socialx.domain.model.comments.CommentModel
 import com.gvelesiani.socialx.domain.model.comments.CommentRequestModel
 
 
-fun CommentRequestModel.transformToDto() = CommentRequestDto(text, userAvatar, userName)
+fun CommentRequestModel.transformToDto() = CommentRequestDto(text)
 
-fun CommentResponseDto.transformToModel() = CommentModel(
+fun CommentResponseDto.transformToModel(currentUserKey: String = "") = CommentModel(
     key, createdAt, userKey ?: "", text, postId, userAvatar ?: "",
-    userName ?: "", likes, likedByCurrentUser = likes.contains(userKey)
+    userName ?: "", likes, likedByCurrentUser = likes.contains(currentUserKey)
 )

@@ -53,8 +53,10 @@
             android:layout_height="250dp"
             android:layout_marginTop="12dp"
             android:scaleType="centerCrop"
-            app:cardCornerRadius="0dp"
+            app:cardCornerRadius="16dp"
+            android:layout_marginEnd="16dp"
             app:cardElevation="0dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCreatedAt">
@@ -63,7 +65,7 @@
                 android:id="@+id/ivPostImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
 
         </androidx.cardview.widget.CardView>
 

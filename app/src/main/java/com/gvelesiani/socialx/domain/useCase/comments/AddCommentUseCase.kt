@@ -13,7 +13,7 @@ class AddCommentUseCase @Inject constructor(private val repository: CommentRepos
     BaseUseCase<Pair<String, CommentRequestModel>, CommentModel> {
     override suspend fun invoke(params: Pair<String, CommentRequestModel>): ResultModel<CommentModel, String> {
         return getResult(repository.addComment(params.first, params.second.transformToDto())) {
-            it.transformToModel()
+            it.transformToModel("")
         }
     }
 }

@@ -85,7 +85,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             CommentsFragment.newInstance(
                                 it.key,
                                 userInfo.avatar,
-                                userInfo.name,
                                 userInfo.key
                             )
                         )

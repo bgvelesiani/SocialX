@@ -1,6 +1,5 @@
 package com.gvelesiani.socialx.presentation.comments
 
-//import com.gvelesiani.socialx.presentation.createpost.applyBundle
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -27,16 +26,14 @@ class CommentsFragment : BaseFragment<FragmentCommentsBinding>(FragmentCommentsB
 
     private lateinit var postId: String
     private lateinit var userImage: String
-    private lateinit var userName: String
-    private lateinit var userKey: String
 
     override fun setupView(savedInstanceState: Bundle?) {
         postId = arguments?.getString("postId") ?: ""
         userImage = arguments?.getString("userImage") ?: ""
-        userName = arguments?.getString("userName") ?: ""
-        userName = arguments?.getString("userKey") ?: ""
+        val userKey = arguments?.getString("userKey") ?: ""
+        viewModel.setKey(userKey)
         setupRecyclerView()
-        viewModel.getComments(postId, userName)
+        viewModel.getComments(postId)
         setOnClickListeners(postId)
         Glide.with(binding.root).load("$IMAGES_MICRO_BASE_URL$userImage")
             .into(binding.addComment.ivUserAvatar)
@@ -50,7 +47,7 @@ class CommentsFragment : BaseFragment<FragmentCommentsBinding>(FragmentCommentsB
                 }
                 btComment.setOnClickListener {
                     val text = etComment.text.toString()
-                    viewModel.addComment(postId, text, userImage, userName, userKey)
+                    viewModel.addComment(postId, text)
                 }
             }
             backClickArea.setOnClickListener {
@@ -61,7 +58,7 @@ class CommentsFragment : BaseFragment<FragmentCommentsBinding>(FragmentCommentsB
 
     private fun setupRecyclerView() {
         adapter = CommentAdapter(clickListener = {}, like = {
-            viewModel.likeOrDislikeComment(it, postId, userName)
+            viewModel.likeOrDislikeComment(it, postId)
         })
         binding.rvComments.adapter = adapter
         binding.rvComments.layoutManager = LinearLayoutManager(requireContext())
@@ -119,13 +116,11 @@ class CommentsFragment : BaseFragment<FragmentCommentsBinding>(FragmentCommentsB
         fun newInstance(
             postId: String,
             userImage: String,
-            userName: String,
             userKey: String
         ): CommentsFragment =
             CommentsFragment().applyBundle {
                 putString("postId", postId)
                 putString("userImage", userImage)
-                putString("userName", userName)
                 putString("userKey", userKey)
             }
     }

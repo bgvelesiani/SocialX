@@ -18,7 +18,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:background="@drawable/comment_background"
         android:orientation="vertical"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
+            android:textColor="#000"
             android:text="Bacho Gvelesiani"
-            android:textSize="14sp"
-            android:textStyle="italic" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvComment"
@@ -59,42 +58,35 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
+        android:layout_marginStart="16dp"
         android:id="@+id/btReply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/medium"
         android:text="Reply"
         android:textColor="#9597A1"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/btLike"
+        app:layout_constraintStart_toEndOf="@+id/llLikes"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <LinearLayout
         android:id="@+id/llLikes"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@id/btReply"
-        app:layout_constraintStart_toEndOf="@id/btReply"
-        app:layout_constraintTop_toTopOf="@id/btReply">
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/btLike"
+        app:layout_constraintStart_toEndOf="@id/btLike"
+        app:layout_constraintTop_toTopOf="@id/btLike">
 
         <TextView
             android:id="@+id/tvLikes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
-            android:visibility="gone"
             android:textColor="#9597A1"
+            android:text="0"
             android:textSize="12sp" />
-
-        <ImageView
-            android:id="@+id/ivLikes"
-            android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_like" />
     </LinearLayout>
 
     <TextView

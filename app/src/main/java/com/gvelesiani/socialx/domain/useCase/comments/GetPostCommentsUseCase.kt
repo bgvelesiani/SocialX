@@ -14,8 +14,7 @@ class GetPostCommentsUseCase @Inject constructor(private val repository: Comment
             repository.getPostComments(params.first)
         ) {
             it.map { dto ->
-                if (dto.likes.contains(params.second)) dto.userKey = params.second
-                dto.transformToModel()
+                dto.transformToModel(params.second)
             }
         }
     }

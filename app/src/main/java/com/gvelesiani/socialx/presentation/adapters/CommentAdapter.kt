@@ -20,7 +20,6 @@ class CommentAdapter(
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var comments: List<CommentModel> = arrayListOf()
     var binding: CommentItemBinding? = null
-    private var userId: Int = 0
 
     @SuppressLint("NotifyDataSetChanged")
     fun submitData(data: List<CommentModel>) {
@@ -63,14 +62,7 @@ class CommentAdapter(
                         )
                     )
                     btLike.text = if (likedByCurrentUser) "Liked" else "Like"
-                    if (likes.isNotEmpty()) {
-                        tvLikes.visibility = View.VISIBLE
-                        ivLikes.visibility = View.VISIBLE
-                        tvLikes.text = likes.size.toString()
-                    } else {
-                        tvLikes.visibility = View.GONE
-                        ivLikes.visibility = View.GONE
-                    }
+                    tvLikes.text = likes.size.toString()
                 }
             }
         }

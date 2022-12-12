@@ -29,10 +29,16 @@ class CommentsVM @Inject constructor(
     private val _uiState = MutableStateFlow<CommentUiState>(CommentUiState.Empty)
     val uiState: StateFlow<CommentUiState> = _uiState
 
-    fun getComments(postId: String,userKey: String) {
+    var userKey = ""
+
+    fun setKey(userKey: String) {
+        this.userKey = userKey
+    }
+
+    fun getComments(postId: String) {
         _uiState.value = CommentUiState.Loading
         viewModelScope.launch {
-            when (val result = getPostCommentsUseCase(Pair(postId,userKey))) {
+            when (val result = getPostCommentsUseCase(Pair(postId, userKey))) {
                 is ResultModel.Failure -> _uiState.value =
                     CommentUiState.Error(result.error.toString())
                 is ResultModel.Success -> _uiState.value =
@@ -43,21 +49,22 @@ class CommentsVM @Inject constructor(
         }
     }
 
-    fun addComment(postId: String, text: String, avatar: String, userName: String,userKey: String) {
+    fun addComment(postId: String, text: String) {
         _uiState.value = CommentUiState.Loading
         viewModelScope.launch {
             when (val result =
-                addCommentUseCase(Pair(postId, CommentRequestModel(text, avatar, userName)))) {
+                addCommentUseCase(Pair(postId, CommentRequestModel(text)))) {
                 is ResultModel.Failure -> _uiState.value =
                     CommentUiState.Error(result.error.toString())
                 is ResultModel.Success -> {
                     _uiState.value = CommentUiState.CommentSuccess
-                    getComments(postId,userKey)
+                    getComments(postId)
                 }
             }
         }
     }
-    fun likeOrDislikeComment(commentKey: String, postId: String,userKey: String) {
+
+    fun likeOrDislikeComment(commentKey: String, postId: String) {
         _uiState.value = CommentUiState.Loading
         viewModelScope.launch {
             when (val result =
@@ -65,7 +72,7 @@ class CommentsVM @Inject constructor(
                 is ResultModel.Failure -> _uiState.value =
                     CommentUiState.Error(result.error.toString())
                 is ResultModel.Success -> {
-                    getComments(postId,userKey)
+                    getComments(postId)
                 }
             }
         }
