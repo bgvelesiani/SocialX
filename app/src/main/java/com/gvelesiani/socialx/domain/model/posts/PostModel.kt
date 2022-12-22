@@ -1,5 +1,9 @@
 package com.gvelesiani.socialx.domain.model.posts
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class PostModel(
     val key: String = "",
     val createdAt: String = "",
@@ -11,4 +15,4 @@ data class PostModel(
     val image: String = "",
     val userImage: String = "",
     val likedByCurrentUser: Boolean = false
-)
+): Parcelable

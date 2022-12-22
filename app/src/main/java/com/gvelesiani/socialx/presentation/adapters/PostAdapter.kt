@@ -15,6 +15,7 @@ import java.util.*
 
 class PostAdapter(
     private val clickListener: (PostModel) -> Unit,
+    private val postClick: (PostModel) -> Unit,
     private val like: (String) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -60,6 +61,9 @@ class PostAdapter(
                 tvUserName.text = post.userName
                 tvCreatedAt.text = Date(post.createdAt).toString()
                 tvPostDescription.text = post.description
+                root.setOnClickListener {
+                    postClick.invoke(post)
+                }
                 with(userInteractions) {
                     tvLikes.text = post.likes.size.toString()
 

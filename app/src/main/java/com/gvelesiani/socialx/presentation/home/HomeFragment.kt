@@ -19,6 +19,7 @@ import com.gvelesiani.socialx.presentation.adapters.PostAdapter
 import com.gvelesiani.socialx.presentation.adapters.StoriesAdapter
 import com.gvelesiani.socialx.presentation.comments.CommentsFragment
 import com.gvelesiani.socialx.presentation.createpost.CreatePostFragment
+import com.gvelesiani.socialx.presentation.post.PostFragment
 import com.gvelesiani.socialx.presentation.search.SearchFragment
 import com.gvelesiani.socialx.presentation.story.StoryFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,6 +94,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             },
             like = {
                 viewModel.likeOrDislikePost(it)
+            },
+            postClick = {
+                parentFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.slide_out,
+                        R.anim.slide_in,
+                        R.anim.slide_out
+                    )
+                        .add(R.id.container, PostFragment.newInstance(it, userInfo))
+                        .addToBackStack(toString())
+                }
             }
         )
         binding.rvHome.adapter = adapter
